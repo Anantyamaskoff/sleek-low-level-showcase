@@ -13,24 +13,24 @@ export function Experience() {
 
   const experiences = [
     {
-      title: "Avionics Intern",
-      company: "Space Technology and Aeronautical Rocketry",
-      period: "2024 - Present",
-      description: "Working on embedded systems and flight control software for experimental rockets. Developing and testing avionics systems.",
-      logo: "/star-logo.png",
-      companyUrl: "https://star-company.com",
-      detailedDescription: "Led the development of flight control algorithms, implemented real-time telemetry systems, and conducted extensive hardware testing procedures.",
-      image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=800",
-    },
-    {
       title: "Engineering Trainee",
       company: "Infineon Technologies",
       period: "2023 - 2024",
       description: "Contributed to microcontroller firmware development and hardware testing procedures.",
-      logo: "/infineon-logo.png",
+      logo: "/src/images/infineon.jpg",
       companyUrl: "https://www.infineon.com",
       detailedDescription: "Developed and optimized firmware for automotive microcontrollers, implemented test automation frameworks, and collaborated with cross-functional teams.",
-      image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=800",
+      image: "/src/images/infineon.jpg",
+    },
+    {
+      title: "Avionics Intern",
+      company: "Space Technology and Aeronautical Rocketry",
+      period: "2024 - Present",
+      description: "Working on embedded systems and flight control software for experimental rockets. Developing and testing avionics systems.",
+      logo: "/src/images/infineon.jpg",
+      companyUrl: "https://in.linkedin.com/company/starlabsurat1",
+      detailedDescription: "Led the development of flight control algorithms, implemented real-time telemetry systems, and conducted extensive hardware testing procedures.",
+      image: "/src/images/starlab.jpg",
     }
   ];
 
