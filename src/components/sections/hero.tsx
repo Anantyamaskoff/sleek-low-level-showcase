@@ -1,8 +1,15 @@
-
 export function Hero() {
   return (
     <section className="flex min-h-screen items-center justify-center py-20 px-4">
       <div className="text-center space-y-6 max-w-3xl mx-auto">
+        <div className="relative w-32 h-32 mx-auto mb-8 group">
+          <img 
+            src="/profile.jpg" 
+            alt="Profile"
+            className="rounded-full w-full h-full object-cover border-4 border-purple-500 transition-transform duration-300 group-hover:scale-110"
+          />
+          <div className="absolute inset-0 rounded-full bg-purple-500/20 animate-pulse" />
+        </div>
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-purple-400 animate-fade-in">
           Low-Level Engineering Enthusiast
         </h1>

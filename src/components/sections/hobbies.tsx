@@ -1,5 +1,12 @@
 
 import { Camera, Book, Gamepad, Bike } from "lucide-react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 export function Hobbies() {
   const hobbies = [
@@ -30,27 +37,33 @@ export function Hobbies() {
   ];
 
   return (
-    <section id="hobbies" className="py-20 px-4">
-      <div className="container mx-auto max-w-6xl">
-        <h2 className="text-3xl font-bold text-center mb-12">Hobbies & Interests</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {hobbies.map((hobby) => (
-            <div key={hobby.title} className="group relative overflow-hidden rounded-lg aspect-square">
-              <img
-                src={hobby.image}
-                alt={hobby.title}
-                className="w-full h-full object-cover transition-transform group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent p-6 flex flex-col justify-end text-white">
-                <div className="flex items-center gap-2 mb-2">
-                  <hobby.icon className="w-5 h-5" />
-                  <h3 className="font-semibold">{hobby.title}</h3>
+    <section id="hobbies" className="py-12 px-4">
+      <div className="container mx-auto max-w-4xl">
+        <h2 className="text-3xl font-bold text-center mb-8">Hobbies & Interests</h2>
+        <Carousel className="w-full max-w-xs mx-auto">
+          <CarouselContent>
+            {hobbies.map((hobby) => (
+              <CarouselItem key={hobby.title}>
+                <div className="relative aspect-square overflow-hidden rounded-lg">
+                  <img
+                    src={hobby.image}
+                    alt={hobby.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent p-4 flex flex-col justify-end">
+                    <div className="flex items-center gap-2 text-white">
+                      <hobby.icon className="w-4 h-4" />
+                      <h3 className="font-medium text-sm">{hobby.title}</h3>
+                    </div>
+                    <p className="text-xs text-gray-200">{hobby.description}</p>
+                  </div>
                 </div>
-                <p className="text-sm text-gray-200">{hobby.description}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
       </div>
     </section>
   );

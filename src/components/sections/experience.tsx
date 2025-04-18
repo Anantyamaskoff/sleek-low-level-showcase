@@ -1,19 +1,36 @@
 
 import { Calendar } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { useState } from "react";
 
 export function Experience() {
+  const [selectedExp, setSelectedExp] = useState<number | null>(null);
+
   const experiences = [
     {
       title: "Avionics Intern",
       company: "Space Technology and Aeronautical Rocketry",
       period: "2024 - Present",
       description: "Working on embedded systems and flight control software for experimental rockets. Developing and testing avionics systems.",
+      logo: "/star-logo.png",
+      companyUrl: "https://star-company.com",
+      detailedDescription: "Led the development of flight control algorithms, implemented real-time telemetry systems, and conducted extensive hardware testing procedures.",
+      image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=800",
     },
     {
       title: "Engineering Trainee",
       company: "Infineon Technologies",
       period: "2023 - 2024",
-      description: "Contributed to microcontroller firmware development and hardware testing procedures. Worked with embedded systems and low-level programming.",
+      description: "Contributed to microcontroller firmware development and hardware testing procedures.",
+      logo: "/infineon-logo.png",
+      companyUrl: "https://www.infineon.com",
+      detailedDescription: "Developed and optimized firmware for automotive microcontrollers, implemented test automation frameworks, and collaborated with cross-functional teams.",
+      image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=800",
     }
   ];
 
@@ -22,12 +39,21 @@ export function Experience() {
       <div className="container mx-auto max-w-4xl">
         <h2 className="text-3xl font-bold text-center mb-12">Experience</h2>
         <div className="space-y-8">
-          {experiences.map((exp) => (
-            <div key={exp.title} className="p-6 rounded-lg border bg-card hover:border-purple-500/50 transition-colors">
+          {experiences.map((exp, index) => (
+            <div key={exp.title} 
+                 className="p-6 rounded-lg border bg-card hover:border-purple-500/50 transition-all transform hover:scale-102 cursor-pointer"
+                 onClick={() => setSelectedExp(index)}>
               <div className="flex justify-between items-start mb-4">
-                <div>
-                  <h3 className="text-xl font-semibold">{exp.title}</h3>
-                  <p className="text-purple-500">{exp.company}</p>
+                <div className="flex items-center gap-4">
+                  <a href={exp.companyUrl} target="_blank" rel="noopener noreferrer" 
+                     className="block w-12 h-12 rounded-full overflow-hidden hover:scale-110 transition-transform"
+                     onClick={(e) => e.stopPropagation()}>
+                    <img src={exp.logo} alt={exp.company} className="w-full h-full object-cover" />
+                  </a>
+                  <div>
+                    <h3 className="text-xl font-semibold">{exp.title}</h3>
+                    <p className="text-purple-500">{exp.company}</p>
+                  </div>
                 </div>
                 <div className="flex items-center text-muted-foreground">
                   <Calendar className="w-4 h-4 mr-2" />
@@ -39,6 +65,24 @@ export function Experience() {
           ))}
         </div>
       </div>
+
+      <Dialog open={selectedExp !== null} onOpenChange={() => setSelectedExp(null)}>
+        {selectedExp !== null && (
+          <DialogContent className="max-w-2xl">
+            <DialogHeader>
+              <DialogTitle>{experiences[selectedExp].title} at {experiences[selectedExp].company}</DialogTitle>
+            </DialogHeader>
+            <div className="mt-4">
+              <img 
+                src={experiences[selectedExp].image} 
+                alt={experiences[selectedExp].company}
+                className="w-full h-48 object-cover rounded-lg mb-4"
+              />
+              <p className="text-muted-foreground">{experiences[selectedExp].detailedDescription}</p>
+            </div>
+          </DialogContent>
+        )}
+      </Dialog>
     </section>
   );
 }

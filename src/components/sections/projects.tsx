@@ -1,4 +1,3 @@
-
 import { Github, ExternalLink } from "lucide-react";
 
 export function Projects() {
@@ -32,8 +31,14 @@ export function Projects() {
       <div className="container mx-auto">
         <h2 className="text-3xl font-bold text-center mb-12">Featured Projects</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project) => (
-            <div key={project.title} className="group rounded-lg overflow-hidden bg-card border hover:border-purple-500/50 transition-all">
+          {projects.map((project, index) => (
+            <div
+              key={project.title}
+              className="group rounded-lg overflow-hidden bg-card border hover:border-purple-500/50 transition-all transform hover:-translate-y-2 duration-300 perspective-1000"
+              style={{
+                animationDelay: `${index * 150}ms`,
+              }}
+            >
               <img 
                 src={project.image} 
                 alt={project.title}
