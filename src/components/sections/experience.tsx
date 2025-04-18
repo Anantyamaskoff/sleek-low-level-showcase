@@ -27,7 +27,7 @@ export function Experience() {
       company: "Space Technology and Aeronautical Rocketry",
       period: "2024 - Present",
       description: "Working on embedded systems and flight control software for experimental rockets. Developing and testing avionics systems.",
-      logo: "/src/images/infineon.jpg",
+      logo: "/src/images/starlab.jpg",
       companyUrl: "https://in.linkedin.com/company/starlabsurat1",
       detailedDescription: "Led the development of flight control algorithms, implemented real-time telemetry systems, and conducted extensive hardware testing procedures.",
       image: "/src/images/starlab.jpg",

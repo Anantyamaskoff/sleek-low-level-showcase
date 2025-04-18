@@ -18,7 +18,14 @@ export function Projects() {
       github: "#"
     },
     {
-      title: "Virtual Machine & Compiler",
+      title: "Virtual Machine",
+      description: "Work in progress: Building a simple VM and compiler in C for educational purposes.",
+      tech: ["C", "Compiler Design", "VM"],
+      image: "/placeholder.svg",
+      github: "#"
+    },
+    {
+      title: "Compiler",
       description: "Work in progress: Building a simple VM and compiler in C for educational purposes.",
       tech: ["C", "Compiler Design", "VM"],
       image: "/placeholder.svg",
