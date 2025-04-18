@@ -4,7 +4,7 @@ export function Hero() {
       <div className="text-center space-y-6 max-w-3xl mx-auto">
         <div className="relative w-32 h-32 mx-auto mb-8 group">
           <img 
-            src="/profile.jpg" 
+            src="/src/images/image.jpg" 
             alt="Profile"
             className="rounded-full w-full h-full object-cover border-4 border-purple-500 transition-transform duration-300 group-hover:scale-110"
           />
