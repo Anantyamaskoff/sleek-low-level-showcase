@@ -13,19 +13,19 @@ export function Experience() {
 
   const experiences = [
     {
-      title: "Engineering Trainee",
+      title: "Embedded Systems Trainee",
       company: "Infineon Technologies",
-      period: "2023 - 2024",
+      period: "2024 - 2024",
       description: "Contributed to microcontroller firmware development and hardware testing procedures.",
       logo: "/src/images/infineon.jpg",
       companyUrl: "https://www.infineon.com",
-      detailedDescription: "Developed and optimized firmware for automotive microcontrollers, implemented test automation frameworks, and collaborated with cross-functional teams.",
+      detailedDescription: "During the summer of 2024, I had the privilege of being selected as one of 25 participants for Infineon Technologies’ intensive embedded systems training program in Bangalore. Over 14 weekends, we delved into the fundamentals of embedded development using PSoC microcontrollers, gaining hands-on experience in bare-metal programming, hardware interfacing, and debugging. This immersive program provided a strong foundation in low-level system design, from memory management to real-time peripheral control. Through practical labs and projects, I developed key embedded systems skills, including writing linker scripts, startup code, and Makefiles for bare-metal environments. I also implemented UART, SPI, and I2C communication protocols, debugged firmware using on-chip debuggers, and built simple device drivers. This experience deepened my understanding of computer architecture, ARM Cortex-M internals, and efficient embedded programming—preparing me for real-world firmware and low-level software challenges.",
       image: "/src/images/infineon.jpg",
     },
     {
       title: "Avionics Intern",
       company: "Space Technology and Aeronautical Rocketry",
-      period: "2024 - Present",
+      period: "2023 - 2023",
       description: "Working on embedded systems and flight control software for experimental rockets. Developing and testing avionics systems.",
       logo: "/src/images/starlab.jpg",
       companyUrl: "https://in.linkedin.com/company/starlabsurat1",
