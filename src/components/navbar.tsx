@@ -13,7 +13,7 @@ export function Navbar() {
           <a href="#experience" className="hover:text-purple-600 transition-colors">Experience</a>
           <a href="#projects" className="hover:text-purple-600 transition-colors">Projects</a>
           <a href="#certifications" className="hover:text-purple-600 transition-colors">Certifications</a>
-          <a href="#blog" className="hover:text-purple-600 transition-colors">Blog</a>
+          <a href="#youtube" className="hover:text-purple-600 transition-colors">Videos</a>
           <a href="#hobbies" className="hover:text-purple-600 transition-colors">Hobbies</a>
           <a href="#contact" className="hover:text-purple-600 transition-colors">Contact</a>
           <ThemeToggle />

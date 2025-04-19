@@ -1,4 +1,6 @@
 
+import { useEffect, useRef } from "react";
+
 export function Hobbies() {
   const hobbies = [
     {
@@ -19,15 +21,48 @@ export function Hobbies() {
     },
   ];
 
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const cards = containerRef.current?.querySelectorAll('.hobby-card');
+            cards?.forEach((card, i) => {
+              setTimeout(() => {
+                card.classList.add('slide-in-right');
+              }, i * 150);
+            });
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      if (containerRef.current) {
+        observer.unobserve(containerRef.current);
+      }
+    };
+  }, []);
+
   return (
     <section id="hobbies" className="py-12 px-4">
       <div className="container mx-auto max-w-4xl">
         <h2 className="text-3xl font-bold text-center mb-8">Hobbies & Interests</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div 
+          ref={containerRef}
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 overflow-hidden"
+        >
           {hobbies.map((hobby) => (
             <div
               key={hobby.title}
-              className="group relative aspect-square overflow-hidden rounded-xl transition-transform hover:scale-105"
+              className="hobby-card group relative aspect-square overflow-hidden rounded-xl transition-transform hover:scale-105 opacity-0"
             >
               <img
                 src={hobby.image}
