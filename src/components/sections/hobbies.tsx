@@ -29,10 +29,8 @@ export function Hobbies() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const cards = containerRef.current?.querySelectorAll('.hobby-card');
-            cards?.forEach((card, i) => {
-              setTimeout(() => {
-                card.classList.add('slide-in-right');
-              }, i * 150);
+            cards?.forEach((card) => {
+              card.classList.add('animate-slide');
             });
           }
         });
@@ -59,10 +57,11 @@ export function Hobbies() {
           ref={containerRef}
           className="grid grid-cols-2 md:grid-cols-4 gap-4 overflow-hidden"
         >
-          {hobbies.map((hobby) => (
+          {hobbies.map((hobby, index) => (
             <div
               key={hobby.title}
               className="hobby-card group relative aspect-square overflow-hidden rounded-xl transition-transform hover:scale-105 opacity-0"
+              style={{ animationDelay: `${index * 150}ms` }}
             >
               <img
                 src={hobby.image}

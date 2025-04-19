@@ -38,11 +38,11 @@ export function Projects() {
     <section id="projects" className="py-20 px-4 min-h-screen relative">
       <div className="container mx-auto">
         <h2 className="text-3xl font-bold text-center mb-12">Featured Projects</h2>
-        <div className="space-y-[25vh]"> {/* Increased spacing between cards */}
+        <div className="space-y-[60vh]"> {/* Adjusted spacing for better scrolling */}
           {projects.map((project, index) => (
             <div
               key={project.title}
-              className="group sticky top-24 bg-card border rounded-xl overflow-hidden hover:border-purple-500/50 transition-all duration-300 max-w-5xl mx-auto shadow-lg" /* Widened cards */
+              className="group sticky top-24 bg-card border rounded-xl overflow-hidden hover:border-purple-500/50 transition-all duration-300 max-w-5xl mx-auto shadow-lg"
               style={{
                 zIndex: projects.length - index,
               }}

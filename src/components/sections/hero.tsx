@@ -1,4 +1,3 @@
-
 import { Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -11,11 +10,7 @@ export function Hero() {
           <img 
             src="/src/images/image.jpg" 
             alt="Profile" 
-            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 mix-blend-multiply" 
-            style={{
-              filter: "saturate(0.9) contrast(1.1)",
-              maskImage: "radial-gradient(circle, black 70%, transparent 100%)"
-            }}
+            className="w-full h-full object-cover rounded-full transition-transform duration-300 group-hover:scale-110" 
           />
         </div>
         <h1 className="text-2xl sm:text-3xl font-bold animate-fade-in">Hi, I'm Yada yada 👋</h1>

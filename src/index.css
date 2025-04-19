@@ -89,6 +89,17 @@
   }
 }
 
+@keyframes slideRight {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
 .animate-fade-in {
   animation: fadeIn 0.6s ease-out forwards;
 }
@@ -99,6 +110,10 @@
 
 .slide-in-right {
   animation: slideInRight 0.5s ease-out forwards;
+}
+
+.animate-slide {
+  animation: slideRight 0.6s ease-out forwards;
 }
 
 .delay-200 {
