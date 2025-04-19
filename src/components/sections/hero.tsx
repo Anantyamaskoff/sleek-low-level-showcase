@@ -14,7 +14,7 @@ export function Hero() {
           />
           <div className="absolute inset-0 rounded-full animate-pulse bg-transparent" />
         </div>
-        <h1 className="text-2xl sm:text-3xl font-bold animate-fade-in">Hi, I'm John Doe 👋</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold animate-fade-in">Hi, I'm Yada yada 👋</h1>
         <h2 className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-purple-400 animate-fade-in my-0 py-[10px] md:text-6xl">
           Low-Level Software Engineer
         </h2>
