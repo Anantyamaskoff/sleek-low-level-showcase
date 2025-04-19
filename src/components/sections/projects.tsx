@@ -1,3 +1,4 @@
+
 import { Github, ExternalLink } from "lucide-react";
 
 export function Projects() {
@@ -34,42 +35,42 @@ export function Projects() {
   ];
 
   return (
-    <section id="projects" className="py-20 px-4 bg-accent/50">
+    <section id="projects" className="py-20 px-4 min-h-screen">
       <div className="container mx-auto">
         <h2 className="text-3xl font-bold text-center mb-12">Featured Projects</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="space-y-12">
           {projects.map((project, index) => (
             <div
               key={project.title}
-              className="group rounded-lg overflow-hidden bg-card border hover:border-purple-500/50 transition-all transform hover:-translate-y-2 duration-300 perspective-1000"
+              className="group sticky top-24 bg-card border rounded-xl overflow-hidden hover:border-purple-500/50 transition-all duration-300 max-w-4xl mx-auto shadow-lg"
               style={{
-                animationDelay: `${index * 150}ms`,
+                zIndex: projects.length - index,
               }}
             >
               <img 
                 src={project.image} 
                 alt={project.title}
-                className="w-full h-48 object-cover"
+                className="w-full h-64 object-cover"
               />
-              <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
-                <p className="text-muted-foreground mb-4">{project.description}</p>
-                <div className="flex flex-wrap gap-2 mb-4">
+              <div className="p-8">
+                <h3 className="text-2xl font-semibold mb-4">{project.title}</h3>
+                <p className="text-muted-foreground mb-6">{project.description}</p>
+                <div className="flex flex-wrap gap-3 mb-6">
                   {project.tech.map((tech) => (
-                    <span key={tech} className="px-2 py-1 text-sm rounded-full bg-accent text-accent-foreground">
+                    <span key={tech} className="px-3 py-1 text-sm rounded-full bg-accent text-accent-foreground">
                       {tech}
                     </span>
                   ))}
                 </div>
-                <div className="flex gap-4">
-                  <a href={project.github} className="flex items-center gap-2 text-sm hover:text-purple-500">
-                    <Github className="w-4 h-4" />
-                    Code
+                <div className="flex gap-6">
+                  <a href={project.github} className="flex items-center gap-2 hover:text-purple-500 transition-colors">
+                    <Github className="w-5 h-5" />
+                    View Code
                   </a>
                   {project.demo && (
-                    <a href={project.demo} className="flex items-center gap-2 text-sm hover:text-purple-500">
-                      <ExternalLink className="w-4 h-4" />
-                      Demo
+                    <a href={project.demo} className="flex items-center gap-2 hover:text-purple-500 transition-colors">
+                      <ExternalLink className="w-5 h-5" />
+                      Live Demo
                     </a>
                   )}
                 </div>
