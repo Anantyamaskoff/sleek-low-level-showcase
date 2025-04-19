@@ -34,9 +34,9 @@ export function Certifications() {
 
   return (
     <section id="certifications" className="py-20 px-4">
-      <div className="container mx-auto max-w-4xl">
+      <div className="container mx-auto max-w-7xl">
         <h2 className="text-3xl font-bold text-center mb-12">Certifications & Coursework</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {certifications.map((cert) => (
             <Card key={cert.title} className="group hover:border-purple-500/50 transition-all transform hover:scale-105">
               <CardHeader className="space-y-1">
