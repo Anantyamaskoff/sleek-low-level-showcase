@@ -1,86 +1,63 @@
 
-import { ExternalLink } from "lucide-react";
-import { useRef, useEffect, useState } from "react";
-
-const certifications = [
-  {
-    title: "Advanced C Programming for Beginners",
-    issuer: "Programming Hub",
-    date: "2024",
-    logo: "/src/images/infineon.jpg",
-    certificateUrl: "#",
-  },
-  {
-    title: "Operating Systems Architecture",
-    issuer: "University Course",
-    date: "2023",
-    logo: "/src/images/starlab.jpg",
-    certificateUrl: "#",
-  },
-  {
-    title: "Computer Networks Fundamentals",
-    issuer: "University Course",
-    date: "2023",
-    logo: "/src/images/infineon.jpg",
-    certificateUrl: "#",
-  },
-];
+import { ScrollText, ExternalLink } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export function Certifications() {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [isHovering, setIsHovering] = useState(false);
-
-  useEffect(() => {
-    if (!scrollRef.current) return;
-    let trans = 0;
-    let raf: number;
-    const animate = () => {
-      if (!isHovering && scrollRef.current) {
-        trans -= 1;
-        if (trans <= -scrollRef.current.scrollWidth / 2) trans = 0;
-        scrollRef.current.style.transform = `translateX(${trans}px)`;
-      }
-      raf = requestAnimationFrame(animate);
-    };
-    raf = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(raf);
-  }, [isHovering]);
-
-  const repeated = [...certifications, ...certifications];
+  const certifications = [
+    {
+      title: "Advanced C Programming for Beginners",
+      issuer: "Programming Hub",
+      date: "2024",
+      icon: ScrollText,
+      certificateUrl: "#",
+    },
+    {
+      title: "Operating Systems Architecture",
+      issuer: "University Course",
+      date: "2023",
+      icon: ScrollText,
+      certificateUrl: "#",
+    },
+    {
+      title: "Computer Networks Fundamentals",
+      issuer: "University Course",
+      date: "2023",
+      icon: ScrollText,
+      certificateUrl: "#",
+    },
+  ];
 
   return (
     <section id="certifications" className="py-20 px-4">
       <div className="container mx-auto max-w-7xl">
         <h2 className="text-3xl font-bold text-center mb-12">Certifications & Coursework</h2>
-        <div
-          className="overflow-x-hidden relative"
-          onMouseEnter={() => setIsHovering(true)}
-          onMouseLeave={() => setIsHovering(false)}
-        >
-          <div className="flex gap-8 min-h-[110px]" ref={scrollRef} style={{transition: "transform 0.1s linear"}}>
-            {repeated.map((cert, i) => (
-              <div
-                key={cert.title + i}
-                className="flex items-center bg-card/95 shadow-lg rounded-2xl border px-6 py-4 min-w-[370px] gap-5 hover:scale-105 transition-transform duration-200"
-                style={{height: "92px"}}
-              >
-                <img src={cert.logo} alt={cert.issuer} className="w-14 min-w-14 h-14 object-cover rounded-full shadow border" />
-                <div className="flex-1 min-w-0">
-                  <div className="font-semibold text-base mb-1">{cert.title}</div>
-                  <div className="text-sm text-muted-foreground">{cert.issuer} – {cert.date}</div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {certifications.map((cert) => (
+            <Card key={cert.title} className="group hover:border-purple-500/50 transition-all transform hover:scale-105">
+              <CardHeader className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <cert.icon className="w-5 h-5 text-purple-500 group-hover:rotate-12 transition-transform" />
+                  <CardTitle className="text-lg">{cert.title}</CardTitle>
                 </div>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">{cert.issuer}</p>
+                <p className="text-sm text-muted-foreground mb-4">{cert.date}</p>
                 <a
                   href={cert.certificateUrl}
-                  className="flex items-center gap-1 text-purple-500 hover:text-purple-700 transition-colors whitespace-nowrap text-sm"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-sm text-purple-500 hover:text-purple-600 transition-colors"
                 >
-                  <ExternalLink className="w-5 h-5" />
-                  View Credential
+                  <ExternalLink className="w-4 h-4 mr-1" />
+                  View Certificate
                 </a>
-              </div>
-            ))}
-          </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </div>
     </section>
