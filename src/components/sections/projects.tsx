@@ -1,5 +1,5 @@
 
-import { Github, ExternalLink } from "lucide-react";
+import { Github, ExternalLink, ArrowLeft } from "lucide-react";
 import { useState } from "react";
 
 const projects = [
@@ -11,7 +11,7 @@ const projects = [
     github: "#",
     demo: "#",
     longDesc: "This project covers the implementation of custom Linux device drivers for sensors on the Raspberry Pi platform. It covers module programming, hardware protocols, and real-world deployment. (Add more details here if available.)",
-    images: ["/placeholder.svg"]
+    images: ["/placeholder.svg", "/src/images/infineon.jpg"]
   },
   {
     title: "16-bit x86 Bootloader",
@@ -21,7 +21,7 @@ const projects = [
     github: "#",
     demo: undefined,
     longDesc: "Wrote a custom bootloader for x86 systems emulated using QEMU. Explored the boot process, BIOS interrupts, and real-mode to protected-mode transitions.",
-    images: ["/placeholder.svg"]
+    images: ["/placeholder.svg", "/src/images/starlab.jpg"]
   },
   {
     title: "Virtual Machine",
@@ -31,12 +31,18 @@ const projects = [
     github: "#",
     demo: undefined,
     longDesc: "Developing a simple virtual machine architecture and a custom compiler for an educational language.",
-    images: ["/placeholder.svg"]
+    images: ["/placeholder.svg", "/src/images/infineon.jpg"]
   }
 ];
 
 export function Projects() {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
+
+  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if ((e.target as HTMLElement).classList.contains("proj-modal-overlay")) {
+      setOpenIdx(null);
+    }
+  };
 
   return (
     <section id="projects" className="py-20 px-4">
@@ -54,6 +60,7 @@ export function Projects() {
                     src={project.image}
                     alt={project.title}
                     className="w-full h-64 object-cover"
+                    style={{ aspectRatio: '4/3' }}
                   />
                   <div className="p-8">
                     <h3 className="text-2xl font-semibold mb-4">{project.title}</h3>
@@ -83,51 +90,59 @@ export function Projects() {
                   </div>
                 </div>
               )}
-              {/* Expanded Card */}
-              {openIdx === idx && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
-                  <div className="relative bg-card w-[95vw] max-w-2xl h-[90vh] rounded-xl shadow-xl overflow-hidden flex flex-col animate-fade-in">
-                    {/* Close button */}
-                    <button
-                      className="absolute top-2 right-3 text-xl text-muted-foreground hover:text-foreground focus:outline-none z-20"
-                      onClick={() => setOpenIdx(null)}
-                      aria-label="Close Project"
-                    >✕</button>
-                    {/* Images */}
-                    <div className="flex gap-2 p-4 pb-2 overflow-x-auto max-h-36">
-                      {project.images.map((img, i) => (
-                        <img key={i} src={img} alt={project.title} className="h-32 w-auto rounded-lg object-cover border" />
-                      ))}
-                    </div>
-                    {/* Details */}
-                    <div className="p-6 pt-2 overflow-y-auto flex-1">
-                      <h3 className="text-2xl font-bold mb-1">{project.title}</h3>
-                      <ul className="list-disc pl-5 mb-4 space-y-2">
-                        <li>{project.description}</li>
-                        <li>
-                          {project.tech.join(", ")}
-                        </li>
-                      </ul>
-                      <p className="mb-6">{project.longDesc}</p>
-                      <div className="flex gap-6 mt-auto">
-                        <a href={project.github} className="flex items-center gap-2 hover:text-purple-500 transition-colors">
-                          <Github className="w-5 h-5" />
-                          View Code
-                        </a>
-                        {project.demo && (
-                          <a href={project.demo} className="flex items-center gap-2 hover:text-purple-500 transition-colors">
-                            <ExternalLink className="w-5 h-5" />
-                            Live Demo
-                          </a>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
           ))}
         </div>
+        {openIdx !== null && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 proj-modal-overlay"
+            onClick={handleOverlayClick}
+          >
+            <div className="relative bg-card w-[96vw] max-w-2xl rounded-xl shadow-xl flex flex-col animate-fade-in overflow-hidden">
+              <button
+                className="absolute top-2 left-3 text-muted-foreground hover:text-foreground focus:outline-none z-20 flex items-center gap-1"
+                onClick={() => setOpenIdx(null)}
+                aria-label="Back to Projects"
+              >
+                <ArrowLeft className="w-5 h-5" /> Back
+              </button>
+              {/* Feature 4:3 Top Image */}
+              <img
+                src={projects[openIdx].images[0]}
+                alt="Project Main"
+                className="w-full h-56 sm:h-72 object-cover border-b"
+                style={{ aspectRatio: '4/3' }}
+              />
+              <div className="p-6 pt-4 overflow-y-auto flex-1 max-h-[56vh] scroll-smooth">
+                <h3 className="text-2xl font-bold mb-1">{projects[openIdx].title}</h3>
+                <ul className="list-disc pl-5 mb-4 space-y-2">
+                  <li>{projects[openIdx].description}</li>
+                  <li>
+                    {projects[openIdx].tech.join(", ")}
+                  </li>
+                </ul>
+                <div className="flex gap-2 mb-3 flex-wrap">
+                  {projects[openIdx].images.slice(1).map((img, i) => (
+                    <img key={i} src={img} alt="Project Media" className="h-24 w-auto rounded-lg object-cover border" />
+                  ))}
+                </div>
+                <p className="mb-6">{projects[openIdx].longDesc}</p>
+                <div className="flex gap-6 mt-auto">
+                  <a href={projects[openIdx].github} className="flex items-center gap-2 hover:text-purple-500 transition-colors">
+                    <Github className="w-5 h-5" />
+                    View Code
+                  </a>
+                  {projects[openIdx].demo && (
+                    <a href={projects[openIdx].demo} className="flex items-center gap-2 hover:text-purple-500 transition-colors">
+                      <ExternalLink className="w-5 h-5" />
+                      Live Demo
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

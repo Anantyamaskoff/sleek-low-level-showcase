@@ -1,5 +1,5 @@
 
-import { Calendar } from "lucide-react";
+import { Calendar, ArrowLeft } from "lucide-react";
 import { useState } from "react";
 
 const experiences = [
@@ -15,7 +15,8 @@ const experiences = [
       "Hands-on experience with PSoC microcontrollers, bare-metal programming, linker scripts, Makefiles, UART/SPI/I2C comms.",
       "Key skills: firmware debugging, device drivers, ARM Cortex-M programming."
     ],
-    images: ["/src/images/infineon.jpg"],
+    images: ["/src/images/infineon.jpg", "/src/images/starlab.jpg"],
+    mainImage: "/src/images/infineon.jpg",
     longDescription: `During the summer of 2024... (add full description as required)`
   },
   {
@@ -29,13 +30,21 @@ const experiences = [
       "Led flight control algorithms & telemetry systems.",
       "Conducted extensive hardware testing for avionics."
     ],
-    images: ["/src/images/starlab.jpg"],
+    images: ["/src/images/starlab.jpg", "/src/images/infineon.jpg"],
+    mainImage: "/src/images/starlab.jpg",
     longDescription: `Led the development of flight control algorithms... (add full description as required)`
   }
 ];
 
 export function Experience() {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
+
+  // Modal close by background overlay click
+  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if ((e.target as HTMLElement).classList.contains('exp-modal-overlay')) {
+      setOpenIdx(null);
+    }
+  };
 
   return (
     <section id="experience" className="py-20 px-4 bg-accent/30">
@@ -73,39 +82,50 @@ export function Experience() {
                   </button>
                 </div>
               )}
-              {/* Expanded Card */}
-              {openIdx === idx && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
-                  <div className="relative bg-card w-[95vw] max-w-2xl h-[90vh] rounded-xl shadow-xl overflow-hidden flex flex-col animate-fade-in">
-                    {/* Close button */}
-                    <button
-                      className="absolute top-2 right-3 text-xl text-muted-foreground hover:text-foreground focus:outline-none z-20"
-                      onClick={() => setOpenIdx(null)}
-                      aria-label="Back to Experience"
-                    >✕</button>
-                    {/* Images */}
-                    <div className="flex gap-2 p-4 pb-2 overflow-x-auto max-h-36">
-                      {exp.images.map((img, i) => (
-                        <img key={i} src={img} alt={exp.company} className="h-32 w-auto rounded-lg object-cover border" />
-                      ))}
-                    </div>
-                    {/* Details */}
-                    <div className="p-6 pt-2 overflow-y-auto flex-1">
-                      <h3 className="text-2xl font-bold mb-1">{exp.title} <span className="text-purple-600">@ {exp.company}</span></h3>
-                      <p className="text-sm text-muted-foreground mb-4">{exp.period}</p>
-                      <ul className="list-disc pl-5 mb-4 space-y-2">
-                        {exp.details.map((point, j) => (
-                          <li key={j}>{point}</li>
-                        ))}
-                      </ul>
-                      <p>{exp.longDescription}</p>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
           ))}
         </div>
+        {openIdx !== null && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 exp-modal-overlay"
+            onClick={handleOverlayClick}
+          >
+            <div className="relative bg-card w-[96vw] max-w-2xl rounded-xl shadow-xl flex flex-col animate-fade-in overflow-hidden">
+              <button
+                className="absolute top-2 left-3 text-muted-foreground hover:text-foreground focus:outline-none z-20 flex items-center gap-1"
+                onClick={() => setOpenIdx(null)}
+                aria-label="Back to Experience"
+              >
+                <ArrowLeft className="w-5 h-5" /> Back
+              </button>
+              {/* Feature 4:3 Top Image */}
+              <img
+                src={experiences[openIdx].mainImage || experiences[openIdx].images[0]}
+                alt="Main visual"
+                className="w-full h-56 sm:h-72 object-cover border-b"
+                style={{ aspectRatio: '4/3' }}
+              />
+              {/* Details */}
+              <div className="p-6 pt-4 overflow-y-auto flex-1 max-h-[56vh] scroll-smooth">
+                <h3 className="text-2xl font-bold mb-1">{experiences[openIdx].title} <span className="text-purple-600">@ {experiences[openIdx].company}</span></h3>
+                <p className="text-sm text-muted-foreground mb-4">{experiences[openIdx].period}</p>
+                <ul className="list-disc pl-5 mb-4 space-y-2">
+                  {experiences[openIdx].details.map((point, j) => (
+                    <li key={j}>{point}</li>
+                  ))}
+                </ul>
+                <div className="flex gap-2 mb-3 flex-wrap">
+                  {experiences[openIdx].images.slice(1).map((img, i) => (
+                    <img key={i} src={img} alt="Project Media" className="h-24 w-auto rounded-lg object-cover border" />
+                  ))}
+                </div>
+                <p>{experiences[openIdx].longDescription}</p>
+              </div>
+              {/* For mobile, add some margin to avoid tap zone overlay */}
+              <div className="h-3" />
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

@@ -24,7 +24,6 @@ const certifications = [
     logo: "/src/images/infineon.jpg",
     certificateUrl: "#",
   },
-  // Add more to test scroll
   {
     title: "RTOS and Real-Time Firmware",
     issuer: "Embedded Systems Org",
@@ -49,11 +48,12 @@ export function Certifications() {
     if (!el) return;
     let running = true;
     let raf: number;
+    // Slow down speed to 0.25px/present
     const doScroll = () => {
       if (!el || !running) return;
-      el.scrollLeft += 1;
-      if (el.scrollLeft >= el.scrollWidth - el.clientWidth) {
-        el.scrollLeft = 0;
+      el.scrollTop += 0.25;
+      if (el.scrollTop >= el.scrollHeight - el.clientHeight) {
+        el.scrollTop = 0;
       }
       raf = requestAnimationFrame(doScroll);
     };
@@ -75,43 +75,41 @@ export function Certifications() {
         <h2 className="text-3xl font-bold text-center mb-10">Certifications & Coursework</h2>
         <div
           ref={scrollRef}
-          className="flex overflow-x-auto gap-7 pb-2 scrollbar-hide group"
+          className="flex flex-col overflow-y-auto gap-7 max-h-[530px] md:max-h-[680px] pb-2 scrollbar-hide group items-center"
           style={{
             scrollBehavior: "smooth",
             WebkitOverflowScrolling: "touch",
-            // for pausable animation effect
+            height: "430px",
+            minHeight: "340px"
           }}
         >
           {certifications.map((cert, idx) => (
             <div
               key={cert.title + idx}
-              className="flex items-center min-w-[380px] max-w-[420px] w-full bg-card rounded-2xl shadow-lg border border-accent px-7 py-5 mr-3 hover:scale-105 transition-transform duration-300"
+              className="flex flex-col items-center bg-card rounded-2xl shadow-lg border border-accent w-[225px] md:w-[280px] h-[340px] md:h-[420px] mx-2 relative pt-6 px-6 pb-5 transition-transform duration-300 hover:scale-105"
               style={{
-                flex: "0 0 420px"
+                aspectRatio: "3/4"
               }}
             >
-              <div className="flex items-center justify-center h-16 w-16 rounded-full mr-4 bg-accent/70 border">
+              <div className="flex items-center justify-center h-16 w-16 rounded-full mb-4 bg-accent/70 border">
                 <img src={cert.logo} alt={cert.issuer} className="h-10 w-10 object-contain" />
               </div>
-              <div className="flex-1 min-w-0">
-                <h3 className="font-bold text-lg truncate mb-1">{cert.title}</h3>
-                <div className="text-sm text-muted-foreground truncate mb-2">{cert.issuer}</div>
-                <div className="text-xs text-muted-foreground">{cert.date}</div>
-              </div>
+              <h3 className="font-bold text-md text-center mb-2">{cert.title}</h3>
+              <div className="text-xs text-muted-foreground text-center mb-1">{cert.issuer}</div>
+              <div className="text-xs text-muted-foreground mb-4">{cert.date}</div>
               <a
                 href={cert.certificateUrl}
-                className="ml-6 shrink-0 flex items-center text-sm text-purple-500 hover:text-purple-600 font-medium px-3 py-1 bg-accent rounded-full"
+                className="mt-auto flex items-center justify-center text-xs text-purple-500 hover:text-purple-600 font-medium px-3 py-1 bg-accent rounded-full w-full transition-colors"
                 target="_blank"
                 rel="noopener"
                 tabIndex={-1}
               >
-                <ExternalLink className="w-4 h-4 mr-1" />
+                <ExternalLink className="w-3 h-3 mr-1" />
                 View Credential
               </a>
             </div>
           ))}
         </div>
-        {/* Hide scrollbar for Chrome/Safari */}
         <style>
           {`.scrollbar-hide::-webkit-scrollbar { display: none; }`}
         </style>

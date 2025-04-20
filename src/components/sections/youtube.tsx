@@ -38,7 +38,7 @@ export function YoutubeSection() {
             <div
               key={video.id}
               ref={el => videoRefs.current[i] = el}
-              className="aspect-video max-w-sm mx-auto w-full opacity-0 scale-95 transition-all duration-700"
+              className="aspect-video max-w-sm mx-auto w-full opacity-0 scale-95 transition-all duration-1000"
             >
               <iframe
                 src={`https://www.youtube.com/embed/${video.id}`}
@@ -55,7 +55,7 @@ export function YoutubeSection() {
           .video-pop {
             opacity: 1 !important;
             transform: scale(1) !important;
-            transition: opacity 0.7s, transform 0.7s;
+            transition: opacity 1s, transform 0.9s;
           }
           `}
         </style>
