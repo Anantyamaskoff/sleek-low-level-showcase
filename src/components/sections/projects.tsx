@@ -1,6 +1,6 @@
 
 import { Github, ExternalLink, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const projects = [
   {
@@ -37,6 +37,16 @@ const projects = [
 
 export function Projects() {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
+
+  // Prevent background scrolling on modal open
+  useEffect(() => {
+    if (openIdx !== null) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [openIdx]);
 
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if ((e.target as HTMLElement).classList.contains("proj-modal-overlay")) {

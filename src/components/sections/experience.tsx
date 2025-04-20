@@ -1,5 +1,6 @@
+
 import { Calendar, ArrowLeft, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const experiences = [
   {
@@ -37,6 +38,16 @@ const experiences = [
 
 export function Experience() {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
+
+  // Prevent background scrolling on modal open
+  useEffect(() => {
+    if (openIdx !== null) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [openIdx]);
 
   // Modal close by overlay click (even if anywhere outside card)
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
