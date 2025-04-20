@@ -1,5 +1,5 @@
 
-import { Github, ExternalLink, ArrowLeft } from "lucide-react";
+import { Github, ExternalLink, X } from "lucide-react";
 import { useState } from "react";
 
 const projects = [
@@ -100,20 +100,20 @@ export function Projects() {
           >
             <div className="relative bg-card w-[96vw] max-w-2xl rounded-xl shadow-xl flex flex-col animate-fade-in overflow-hidden">
               <button
-                className="absolute top-2 left-3 text-muted-foreground hover:text-foreground focus:outline-none z-20 flex items-center gap-1"
+                className="absolute top-2 right-3 text-muted-foreground hover:text-foreground focus:outline-none z-20 flex items-center gap-1"
                 onClick={() => setOpenIdx(null)}
-                aria-label="Back to Projects"
+                aria-label="Close"
               >
-                <ArrowLeft className="w-5 h-5" /> Back
+                <X className="w-6 h-6" />
               </button>
-              {/* Feature 4:3 Top Image */}
+              {/* Top 4:3 Image */}
               <img
                 src={projects[openIdx].images[0]}
                 alt="Project Main"
                 className="w-full h-56 sm:h-72 object-cover border-b"
                 style={{ aspectRatio: '4/3' }}
               />
-              <div className="p-6 pt-4 overflow-y-auto flex-1 max-h-[56vh] scroll-smooth">
+              <div className="p-6 pt-4 flex-1 max-h-[56vh] overflow-y-auto scroll-smooth">
                 <h3 className="text-2xl font-bold mb-1">{projects[openIdx].title}</h3>
                 <ul className="list-disc pl-5 mb-4 space-y-2">
                   <li>{projects[openIdx].description}</li>

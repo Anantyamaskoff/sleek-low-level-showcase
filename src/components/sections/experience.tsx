@@ -1,5 +1,4 @@
-
-import { Calendar, ArrowLeft } from "lucide-react";
+import { Calendar, ArrowLeft, X } from "lucide-react";
 import { useState } from "react";
 
 const experiences = [
@@ -39,7 +38,7 @@ const experiences = [
 export function Experience() {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
 
-  // Modal close by background overlay click
+  // Modal close by overlay click (even if anywhere outside card)
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if ((e.target as HTMLElement).classList.contains('exp-modal-overlay')) {
       setOpenIdx(null);
@@ -92,11 +91,11 @@ export function Experience() {
           >
             <div className="relative bg-card w-[96vw] max-w-2xl rounded-xl shadow-xl flex flex-col animate-fade-in overflow-hidden">
               <button
-                className="absolute top-2 left-3 text-muted-foreground hover:text-foreground focus:outline-none z-20 flex items-center gap-1"
+                className="absolute top-2 right-3 text-muted-foreground hover:text-foreground focus:outline-none z-20 flex items-center gap-1"
                 onClick={() => setOpenIdx(null)}
-                aria-label="Back to Experience"
+                aria-label="Close"
               >
-                <ArrowLeft className="w-5 h-5" /> Back
+                <X className="w-6 h-6" />
               </button>
               {/* Feature 4:3 Top Image */}
               <img
@@ -105,8 +104,8 @@ export function Experience() {
                 className="w-full h-56 sm:h-72 object-cover border-b"
                 style={{ aspectRatio: '4/3' }}
               />
-              {/* Details */}
-              <div className="p-6 pt-4 overflow-y-auto flex-1 max-h-[56vh] scroll-smooth">
+              {/* Details (make only this scrollable!) */}
+              <div className="p-6 pt-4 flex-1 max-h-[56vh] overflow-y-auto scroll-smooth">
                 <h3 className="text-2xl font-bold mb-1">{experiences[openIdx].title} <span className="text-purple-600">@ {experiences[openIdx].company}</span></h3>
                 <p className="text-sm text-muted-foreground mb-4">{experiences[openIdx].period}</p>
                 <ul className="list-disc pl-5 mb-4 space-y-2">
@@ -121,7 +120,6 @@ export function Experience() {
                 </div>
                 <p>{experiences[openIdx].longDescription}</p>
               </div>
-              {/* For mobile, add some margin to avoid tap zone overlay */}
               <div className="h-3" />
             </div>
           </div>

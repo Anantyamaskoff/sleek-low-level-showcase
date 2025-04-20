@@ -10,7 +10,7 @@ const roles = [
   "Kernel Developer"
 ];
 
-function useTypingAnimation(words: string[], speed = 50, pause = 1500) {
+function useTypingAnimation(words: string[], speed = 60, pause = 1400) {
   const [index, setIndex] = useState(0);
   const [text, setText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
@@ -38,7 +38,7 @@ function useTypingAnimation(words: string[], speed = 50, pause = 1500) {
 }
 
 export function Hero() {
-  const typing = useTypingAnimation(roles, 40, 1300);
+  const typing = useTypingAnimation(roles, 44, 1300);
   // For emoji wiggle
   const [wiggle, setWiggle] = useState(true);
   useEffect(() => {
@@ -47,54 +47,60 @@ export function Hero() {
   }, []);
   // Reserve width to max role so it never jumps/breaks to new line
   const maxRoleLen = roles.reduce((a, b) => a.length > b.length ? a : b, "");
+  // Responsive: wrap for narrow screens
   
   return (
-    <section className="py-12 px-4 flex items-center min-h-[80vh]">
-      <div className="container mx-auto max-w-6xl flex flex-col md:flex-row gap-10 md:gap-24 items-center md:items-start justify-center">
+    <section className="py-16 px-4 flex items-center min-h-[80vh]">
+      <div className="container mx-auto max-w-6xl flex flex-col md:flex-row gap-12 md:gap-20 items-center md:items-start justify-center">
         {/* LEFT COLUMN */}
         <div className="flex-1 flex flex-col items-center md:items-end justify-center w-full max-w-sm md:max-w-none">
-          {/* Photo & College Card */}
-          <div className="relative w-48 h-48 md:w-56 md:h-56 mb-5">
+          {/* Profile Photo */}
+          <div className="relative mb-7">
             <img
               src="/src/images/image.jpg"
               alt="Profile"
-              className="w-full h-full object-cover rounded-full border-4 border-white dark:border-card shadow-xl"
+              className="w-52 h-52 md:w-64 md:h-64 object-cover rounded-full border-4 border-white dark:border-card shadow-xl bg-white"
+              style={{ marginBottom: "32px" }}
             />
             {/* College Card */}
-            <div className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[105%] translate-y-2 md:translate-y-4 bg-background/95 shadow-lg border rounded-xl flex flex-col items-stretch px-3 pt-4 pb-2 z-10">
-              <div className="flex items-center gap-3 mb-1">
-                <img
-                  src="/src/images/infineon.jpg"
-                  alt="University Logo"
-                  className="h-8 w-8 rounded-full border object-cover"
-                />
-                <div className="flex flex-col min-w-0">
-                  <div className="font-bold truncate">yadayada school of engineering</div>
-                  <div className="text-xs text-muted-foreground truncate">computer science engineering</div>
+            <div
+              className="absolute left-1/2 -translate-x-1/2 top-full mt-3 w-[340px] md:w-[410px] bg-background/95 shadow-lg border rounded-2xl flex items-center px-6 py-4 gap-4 z-10"
+              style={{ minWidth: 280, maxWidth: "98vw" }}
+            >
+              <img
+                src="/src/images/infineon.jpg"
+                alt="University Logo"
+                className="h-12 w-12 rounded-full border object-cover mr-3"
+              />
+              <div className="flex flex-col min-w-0 flex-1">
+                <div className="font-bold truncate text-lg md:text-xl">yadayada school of engineering</div>
+                <div className="text-xs md:text-sm text-muted-foreground truncate">
+                  computer science engineering
                 </div>
-              </div>
-              <div className="flex w-full justify-center gap-2 mt-3 pb-1">
-                <Button asChild className="flex-1 min-w-24 justify-center" variant="outline" size="sm">
-                  <a href="https://linkedin.com" target="_blank" rel="noopener" className="flex items-center gap-2 px-0">
-                    <Linkedin /> LinkedIn
-                  </a>
-                </Button>
-                <Button asChild className="flex-1 min-w-24 justify-center" variant="outline" size="sm">
-                  <a href="/resume.pdf" target="_blank" rel="noopener" className="flex items-center gap-2 px-0">
-                    <FileText /> Resume
-                  </a>
-                </Button>
-                <Button asChild className="flex-1 min-w-24 justify-center" variant="outline" size="sm">
-                  <a href="https://github.com" target="_blank" rel="noopener" className="flex items-center gap-2 px-0">
-                    <Github /> GitHub
-                  </a>
-                </Button>
               </div>
             </div>
           </div>
+          {/* Social Buttons OUTSIDE college card, centered and same width as card */}
+          <div className="flex flex-row gap-4 w-[340px] md:w-[410px] mx-auto justify-center mt-7">
+            <Button asChild className="flex-1 min-w-0 justify-center" variant="outline" size="sm">
+              <a href="https://linkedin.com" target="_blank" rel="noopener" className="flex items-center gap-2 px-0 w-full justify-center">
+                <Linkedin /> LinkedIn
+              </a>
+            </Button>
+            <Button asChild className="flex-1 min-w-0 justify-center" variant="outline" size="sm">
+              <a href="/resume.pdf" target="_blank" rel="noopener" className="flex items-center gap-2 px-0 w-full justify-center">
+                <FileText /> Resume
+              </a>
+            </Button>
+            <Button asChild className="flex-1 min-w-0 justify-center" variant="outline" size="sm">
+              <a href="https://github.com" target="_blank" rel="noopener" className="flex items-center gap-2 px-0 w-full justify-center">
+                <Github /> GitHub
+              </a>
+            </Button>
+          </div>
         </div>
         {/* RIGHT COLUMN */}
-        <div className="flex-1 flex flex-col items-center md:items-start justify-center w-full mt-16 md:mt-0 min-w-0">
+        <div className="flex-1 flex flex-col items-center md:items-start justify-center w-full mt-24 md:mt-0 min-w-0">
           <h1 className="text-3xl sm:text-4xl font-bold flex items-center gap-2 mb-5 whitespace-nowrap">
             Hi, I’m yadayada{" "}
             <span
@@ -105,10 +111,16 @@ export function Hero() {
               role="img"
             >👋</span>
           </h1>
-          {/* Typing with reserved width to prevent jumping, on one line always */}
+          {/* Typing: fixed width block so never wraps (even if longer/shorter text) */}
           <h2
-            className="text-2xl sm:text-3xl md:text-4xl font-bold h-12 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-purple-400 mb-2 min-h-[2.5rem]"
-            style={{ minWidth: `${maxRoleLen.length + 4}ch`, maxWidth: `${maxRoleLen.length + 6}ch`, whiteSpace: 'nowrap', overflow: "hidden" }}
+            className="text-2xl sm:text-3xl md:text-4xl font-bold h-12 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-purple-400 mb-2 min-h-[2.5rem] transition-all duration-300"
+            style={{
+              minWidth: `${maxRoleLen.length+2}ch`,
+              maxWidth: `${maxRoleLen.length+5}ch`,
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              display: "inline-block"
+            }}
           >
             <span>
               {typing}

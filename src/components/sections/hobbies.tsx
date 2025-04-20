@@ -1,10 +1,9 @@
-
 import { useEffect, useRef } from "react";
 
 // 10 hobbies max, split into two rows
 const hobbies = [
   { title: "Photography", image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=300" },
-  { title: "Technical Reading", image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=300" },
+  { title: "Technical Reading", image: "https://images.unsplash.com/photo-1461749280684-dccba630e475?auto=format&fit=crop&w=300" },
   { title: "Game Development", image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=300" },
   { title: "Cycling", image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=300" },
   { title: "Cooking", image: "https://images.unsplash.com/photo-1466637574441-749b8f19452f?auto=format&fit=crop&w=300" },
@@ -16,15 +15,14 @@ const hobbies = [
 ];
 
 function useAutoScroll(isReverse: boolean, rowRef: React.RefObject<HTMLDivElement>, cardWidth = 144) {
-  // Animate scrollLeft or scrollRight, slow speed
+  // Animate scrollLeft or scrollRight, much slower speed for smoother/continuous effect
   useEffect(() => {
     const container = rowRef.current;
     if (!container) return;
     let raf: number;
     let running = true;
     const maxScroll = container.scrollWidth - container.clientWidth;
-    // scroll amount slow: 0.25 px/frame
-    const scrollStep = isReverse ? -0.25 : 0.25;
+    const scrollStep = isReverse ? -0.14 : 0.14; // slower (in px/frame)
     const handle = () => {
       if (!running) {
         raf = requestAnimationFrame(handle);
@@ -73,7 +71,7 @@ export function Hobbies() {
               {hobbiesDoubled.map((hobby, index) => (
                 <div
                   key={`row1-${hobby.title}-${index}`}
-                  className="hobby-card group relative w-[120px] md:w-[144px] aspect-[10/13] flex-shrink-0"
+                  className="hobby-card group relative w-[112px] md:w-[138px] aspect-[4/3] flex-shrink-0"
                   tabIndex={-1}
                 >
                   <img
@@ -96,7 +94,7 @@ export function Hobbies() {
               {hobbiesDoubled.slice().reverse().map((hobby, index) => (
                 <div
                   key={`row2-${hobby.title}-${index}`}
-                  className="hobby-card group relative w-[110px] md:w-[128px] aspect-[10/13] flex-shrink-0"
+                  className="hobby-card group relative w-[112px] md:w-[138px] aspect-[4/3] flex-shrink-0"
                   tabIndex={-1}
                 >
                   <img
