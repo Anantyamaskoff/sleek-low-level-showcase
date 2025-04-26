@@ -1,5 +1,5 @@
 
-import { ExternalLink, ArrowRight } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import { useRef, useEffect, useState } from "react";
 
 const certifications = [
@@ -14,7 +14,7 @@ const certifications = [
     title: "Operating Systems Architecture",
     issuer: "University Course",
     date: "2023",
-    logo: "/src/images/infineon.jpg",
+    logo: "/src/images/starlab.jpg",
     certificateUrl: "#",
   },
   {
@@ -24,131 +24,64 @@ const certifications = [
     logo: "/src/images/infineon.jpg",
     certificateUrl: "#",
   },
-  {
-    title: "RTOS and Real-Time Firmware",
-    issuer: "Embedded Systems Org",
-    date: "2023",
-    logo: "/src/images/starlab.jpg",
-    certificateUrl: "#",
-  },
-  {
-    title: "Digital Logic Design",
-    issuer: "YadaYada School",
-    date: "2022",
-    logo: "/src/images/infineon.jpg",
-    certificateUrl: "#",
-  },
 ];
-
-// How many cards visible per "page" (row)
-const VISIBLE_COUNT = 3;
-const CARD_WIDTH = 322; // px + gap
 
 export function Certifications() {
   const scrollRef = useRef<HTMLDivElement>(null);
-  // Track if mouse is hovered (for pause)
-  const [running, setRunning] = useState(true);
+  const [isHovering, setIsHovering] = useState(false);
 
-  // Slower smooth left-to-right auto-scroll
   useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
+    if (!scrollRef.current) return;
+    let trans = 0;
     let raf: number;
-    const doScroll = () => {
-      if (!running) {
-        raf = requestAnimationFrame(doScroll);
-        return;
+    const animate = () => {
+      if (!isHovering && scrollRef.current) {
+        trans -= 1;
+        if (trans <= -scrollRef.current.scrollWidth / 2) trans = 0;
+        scrollRef.current.style.transform = `translateX(${trans}px)`;
       }
-      el.scrollLeft += 0.12; // slower
-      if (el.scrollLeft >= el.scrollWidth - el.clientWidth - 2) {
-        el.scrollLeft = 0;
-      }
-      raf = requestAnimationFrame(doScroll);
+      raf = requestAnimationFrame(animate);
     };
-    raf = requestAnimationFrame(doScroll);
-    return () => {
-      cancelAnimationFrame(raf);
-    };
-  }, [running]);
+    raf = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(raf);
+  }, [isHovering]);
 
-  // Pause on hover
-  const handleMouseEnter = () => setRunning(false);
-  const handleMouseLeave = () => setRunning(true);
+  const repeated = [...certifications, ...certifications];
 
-  // Manual scroll arrow
-  const scrollRight = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollLeft += CARD_WIDTH;
-    }
-  };
-
-  // Responsive width for cards/track
   return (
     <section id="certifications" className="py-20 px-4">
       <div className="container mx-auto max-w-7xl">
-        <h2 className="text-3xl font-bold text-center mb-10">
-          Certifications &amp; Coursework
-        </h2>
-        <div className="w-full relative">
-          <div
-            ref={scrollRef}
-            className="flex flex-row overflow-x-auto gap-8 scrollbar-hide group items-center"
-            style={{
-              scrollBehavior: "smooth",
-              WebkitOverflowScrolling: "touch",
-              minHeight: "428px",
-              height: "428px",
-              paddingBottom: "8px",
-            }}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            tabIndex={0}
-          >
-            {certifications.map((cert, idx) => (
+        <h2 className="text-3xl font-bold text-center mb-12">Certifications & Coursework</h2>
+        <div
+          className="overflow-x-hidden relative"
+          onMouseEnter={() => setIsHovering(true)}
+          onMouseLeave={() => setIsHovering(false)}
+        >
+          <div className="flex gap-8 min-h-[110px]" ref={scrollRef} style={{transition: "transform 0.1s linear"}}>
+            {repeated.map((cert, i) => (
               <div
-                key={cert.title + idx}
-                className="flex flex-col items-center bg-card rounded-2xl shadow-lg border border-accent w-[300px] md:w-[320px] h-[400px] md:h-[400px] mx-2 relative pt-6 px-6 pb-4 transition-transform duration-300 hover:scale-105"
-                style={{
-                  aspectRatio: "4/3",
-                  minWidth: 300,
-                  maxWidth: 340,
-                }}
+                key={cert.title + i}
+                className="flex items-center bg-card/95 shadow-lg rounded-2xl border px-6 py-4 min-w-[370px] gap-5 hover:scale-105 transition-transform duration-200"
+                style={{height: "92px"}}
               >
-                <div className="flex items-center justify-center h-14 w-14 rounded-full mb-4 bg-accent/70 border">
-                  <img src={cert.logo} alt={cert.issuer} className="h-9 w-9 object-contain" />
+                <img src={cert.logo} alt={cert.issuer} className="w-14 min-w-14 h-14 object-cover rounded-full shadow border" />
+                <div className="flex-1 min-w-0">
+                  <div className="font-semibold text-base mb-1">{cert.title}</div>
+                  <div className="text-sm text-muted-foreground">{cert.issuer} – {cert.date}</div>
                 </div>
-                <h3 className="font-bold text-lg text-center mb-2">{cert.title}</h3>
-                <div className="text-xs text-muted-foreground text-center mb-1">{cert.issuer}</div>
-                <div className="text-xs text-muted-foreground mb-4">{cert.date}</div>
-                <div className="flex-1" />
                 <a
                   href={cert.certificateUrl}
-                  className="flex items-center justify-center text-xs text-purple-500 hover:text-purple-600 font-medium px-3 py-2 bg-accent rounded-full w-full transition-colors mt-auto"
+                  className="flex items-center gap-1 text-purple-500 hover:text-purple-700 transition-colors whitespace-nowrap text-sm"
                   target="_blank"
-                  rel="noopener"
-                  tabIndex={-1}
+                  rel="noopener noreferrer"
                 >
-                  <ExternalLink className="w-3 h-3 mr-2" />
+                  <ExternalLink className="w-5 h-5" />
                   View Credential
                 </a>
               </div>
             ))}
           </div>
-          {/* Right Arrow */}
-          <button
-            aria-label="Scroll right"
-            className="absolute top-1/2 -translate-y-1/2 right-0 bg-white/90 hover:bg-accent transition-colors shadow-md rounded-full p-1 z-10 border border-accent"
-            style={{
-              display: "block",
-            }}
-            onClick={scrollRight}
-          >
-            <ArrowRight className="w-7 h-7 text-purple-500" />
-          </button>
         </div>
-        <style>
-          {`.scrollbar-hide::-webkit-scrollbar { display: none; }`}
-        </style>
       </div>
     </section>
   );

@@ -1,150 +1,126 @@
 
-import { useState, useEffect, useRef } from "react";
-import { Linkedin, Github, FileText } from "lucide-react";
+import { Linkedin, Github, ArrowDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useEffect, useRef, useState } from "react";
 
-// Roles for typing animation (longest sets container width)
-const roles = [
+// Typing animation hook
+const typingRoles = [
   "Low-Level Software Engineer",
   "Embedded Systems Engineer",
-  "Kernel Developer"
+  "Kernel Developer",
 ];
-
-function useTypingAnimation(words: string[], speed = 60, pause = 1400) {
+function useTypingAnimation(words: string[], typingSpeed = 48, pause = 1100) {
   const [index, setIndex] = useState(0);
-  const [text, setText] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [subIndex, setSubIndex] = useState(0);
+  const [forward, setForward] = useState(true);
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
-    const currentWord = words[index];
-    if (!isDeleting) {
-      if (text.length < currentWord.length) {
-        timer = setTimeout(() => setText(currentWord.slice(0, text.length + 1)), speed);
-      } else {
-        timer = setTimeout(() => setIsDeleting(true), pause);
-      }
-    } else {
-      if (text.length > 0) {
-        timer = setTimeout(() => setText(text.slice(0, text.length - 1)), speed / 2);
-      } else {
-        setIsDeleting(false);
-        setIndex((prev) => (prev + 1) % words.length);
-      }
+    if (forward && subIndex === words[index].length) {
+      setTimeout(() => setForward(false), pause);
+      return;
     }
-    return () => clearTimeout(timer);
-  }, [text, isDeleting, index, words]);
-  return text || " ";
+    if (!forward && subIndex === 0) {
+      setIndex((i) => (i + 1) % words.length);
+      setForward(true);
+      return;
+    }
+    const timeout = setTimeout(() => {
+      setSubIndex((s) => s + (forward ? 1 : -1));
+    }, typingSpeed);
+    return () => clearTimeout(timeout);
+  }, [subIndex, index, forward, words, typingSpeed, pause]);
+
+  return words[index].slice(0, subIndex);
 }
 
 export function Hero() {
-  const typing = useTypingAnimation(roles, 44, 1300);
-  // For emoji wiggle
-  const [wiggle, setWiggle] = useState(true);
-  useEffect(() => {
-    const wiggleTimer = setInterval(() => setWiggle(w => !w), 700);
-    return () => clearInterval(wiggleTimer);
-  }, []);
-  // Reserve width to max role so it never jumps/breaks to new line
-  const maxRoleLen = roles.reduce((a, b) => a.length > b.length ? a : b, "");
+  const typed = useTypingAnimation(typingRoles, 42, 1200);
 
   return (
-    <section className="pt-16 pb-16 px-4 flex items-center min-h-[80vh]">
-      <div className="container mx-auto max-w-6xl flex flex-col md:flex-row gap-14 md:gap-20 items-center md:items-start justify-center">
-        {/* LEFT COLUMN */}
-        <div className="flex-1 flex flex-col items-center md:items-end justify-center w-full max-w-sm md:max-w-none">
-          {/* Profile Photo */}
-          <div className="relative mb-8 flex flex-col items-center w-full">
+    <section className="flex flex-col md:flex-row items-center justify-center min-h-[90vh] py-8 px-4 gap-10 md:gap-24">
+      {/* Left Column */}
+      <div className="flex flex-col items-center gap-6 max-w-xs md:max-w-none w-full relative">
+        <div className="relative w-44 h-44 md:w-56 md:h-56 mb-3 group">
+          <img
+            src="/src/images/image.jpg"
+            alt="Profile"
+            className="w-full h-full object-cover rounded-xl shadow-lg border-4 border-white"
+          />
+          {/* Overlay Card */}
+          <div className="absolute left-2 bottom-2 flex items-center bg-white/90 px-2 py-1 rounded-lg shadow-md min-w-[170px] backdrop-blur-sm">
             <img
-              src="/src/images/image.jpg"
-              alt="Profile"
-              className="w-60 h-60 md:w-72 md:h-72 object-cover rounded-full border-4 border-white dark:border-card shadow-xl bg-white"
-              style={{ marginBottom: "38px" }}
+              src="/src/images/infineon.jpg"
+              alt="University"
+              className="w-9 h-9 object-contain rounded-full mr-2 border"
             />
-            {/* College Card */}
-            <div
-              className="w-[340px] md:w-[410px] bg-background/95 shadow-lg border rounded-2xl flex items-center px-6 py-4 gap-4 z-10"
-              style={{
-                minWidth: 280,
-                maxWidth: "98vw",
-                marginTop: "18px",
-                justifyContent: "flex-start"
-              }}
-            >
-              <img
-                src="/src/images/infineon.jpg"
-                alt="University Logo"
-                className="h-12 w-12 rounded-full border object-cover mr-3 ml-1"
-              />
-              <div className="flex flex-col min-w-0 flex-1 pl-2">
-                <div className="font-bold truncate text-lg md:text-xl">
-                  yadayada school of engineering
-                </div>
-                <div className="text-xs md:text-sm text-muted-foreground truncate">
-                  computer science engineering
-                </div>
-              </div>
+            <div>
+              <p className="font-semibold text-gray-900 text-sm leading-tight">Yada yada</p>
+              <span className="block text-xs text-muted-foreground">B.Tech in Electronics Engineering</span>
             </div>
           </div>
-          {/* Social Buttons below college card, full width, aligned */}
-          <div className="flex flex-row gap-4 w-[340px] md:w-[410px] mx-auto justify-center mt-5 mb-2">
-            <Button asChild className="flex-1 min-w-0 justify-center" variant="outline" size="sm">
-              <a href="https://linkedin.com" target="_blank" rel="noopener" className="flex items-center gap-2 px-0 w-full justify-center">
-                <Linkedin /> LinkedIn
-              </a>
-            </Button>
-            <Button asChild className="flex-1 min-w-0 justify-center" variant="outline" size="sm">
-              <a href="/resume.pdf" target="_blank" rel="noopener" className="flex items-center gap-2 px-0 w-full justify-center">
-                <FileText /> Resume
-              </a>
-            </Button>
-            <Button asChild className="flex-1 min-w-0 justify-center" variant="outline" size="sm">
-              <a href="https://github.com" target="_blank" rel="noopener" className="flex items-center gap-2 px-0 w-full justify-center">
-                <Github /> GitHub
-              </a>
-            </Button>
-          </div>
         </div>
-        {/* RIGHT COLUMN */}
-        <div className="flex-1 flex flex-col items-center md:items-start justify-center w-full mt-24 md:mt-0 min-w-0">
-          <h1 className="text-3xl sm:text-4xl font-bold flex items-center gap-2 mb-5 whitespace-nowrap">
-            Hi, I’m yadayada{" "}
-            <span
-              className={`inline-block text-4xl origin-[70%_70%] transition-transform ${wiggle ? "rotate-[12deg]" : "-rotate-[8deg]"}`}
-              aria-label="waving hand"
-              role="img"
-            >👋</span>
-          </h1>
-          {/* Typing: fixed width block so never wraps (even if longer/shorter text) */}
-          <h2
-            className="text-2xl sm:text-3xl md:text-4xl font-bold h-12 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-purple-400 mb-2 min-h-[2.5rem] transition-all duration-300"
-            style={{
-              minWidth: `${maxRoleLen.length + 2}ch`,
-              maxWidth: `${maxRoleLen.length + 6}ch`,
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              display: "inline-block",
-            }}
+        {/* Links */}
+        <div className="flex flex-row gap-4">
+          <a
+            href="https://www.linkedin.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-muted hover:bg-purple-100 rounded-full p-2 shadow-md transition-all"
+            title="LinkedIn"
           >
-            <span>
-              {typing}
-              <span className="blinking-cursor ml-1 text-purple-600">|</span>
-            </span>
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-lg mt-5 text-center md:text-left">
-            I’m passionate about building robust and efficient systems from the ground up, with deep expertise in embedded systems, firmware, and kernel programming.
-          </p>
+            <Linkedin className="h-6 w-6 text-purple-700" />
+          </a>
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-muted hover:bg-purple-100 rounded-full p-2 shadow-md transition-all"
+            title="Resume"
+          >
+            <ArrowDown className="h-6 w-6 text-purple-700" />
+          </a>
+          <a
+            href="https://github.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-muted hover:bg-purple-100 rounded-full p-2 shadow-md transition-all"
+            title="GitHub"
+          >
+            <Github className="h-6 w-6 text-purple-700" />
+          </a>
         </div>
       </div>
-      {/* Typing cursor anim CSS */}
-      <style>
-      {`
-      .blinking-cursor {
-        animation: blink 1s steps(2, start) infinite;
-      }
-      @keyframes blink {
-        to { opacity: 0; }
-      }
+      {/* Right Column */}
+      <div className="flex flex-col items-start justify-center text-left w-full md:w-[420px] max-w-xl">
+        <h1 className="text-2xl sm:text-3xl font-bold mb-2 flex flex-wrap items-center gap-2">
+          Hi, I’m <span className="pl-1 text-purple-600">Yada yada</span>
+          <span
+            className="inline-block origin-bottom hover:animate-none animate-wiggle ml-2"
+            style={{animation: "wiggle 1.4s infinite alternate"}}
+            role="img"
+            aria-label="waving hand"
+          >
+            👋
+          </span>
+        </h1>
+        <h2 className="text-3xl sm:text-4xl font-bold mb-4 mt-2 bg-gradient-to-r from-purple-600 to-purple-400 bg-clip-text text-transparent min-h-[38px]">
+          {typed}
+          <span className="border-r-2 border-purple-500 animate-blink inline-block w-2 h-6 align-middle ml-0.5" />
+        </h2>
+        <p className="text-lg text-muted-foreground leading-relaxed mb-2">
+          I'm passionate about building robust and efficient systems from the ground up.<br />
+          With expertise in embedded systems and low-level programming, I love tackling complex challenges in firmware development and system architecture.
+        </p>
+      </div>
+      <style>{`
+        @keyframes wiggle {
+          0% { transform: rotate(-5deg);}
+          60% { transform: rotate(20deg);}
+          100% { transform: rotate(-5deg);}
+        }
+        .animate-wiggle { animation: wiggle 1.4s infinite alternate }
+        @keyframes blink { 0%, 49% {opacity:1;} 50%, 100%{opacity:0;} }
+        .animate-blink { animation: blink 1s step-end infinite; }
       `}
       </style>
     </section>
