@@ -1,119 +1,154 @@
 
-import { ScrollText, ExternalLink } from "lucide-react";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { useRef, useEffect } from "react";
+import { ExternalLink, ArrowRight } from "lucide-react";
+import { useRef, useEffect, useState } from "react";
+
+const certifications = [
+  {
+    title: "Advanced C Programming for Beginners",
+    issuer: "Programming Hub",
+    date: "2024",
+    logo: "/src/images/infineon.jpg",
+    certificateUrl: "#",
+  },
+  {
+    title: "Operating Systems Architecture",
+    issuer: "University Course",
+    date: "2023",
+    logo: "/src/images/infineon.jpg",
+    certificateUrl: "#",
+  },
+  {
+    title: "Computer Networks Fundamentals",
+    issuer: "University Course",
+    date: "2023",
+    logo: "/src/images/infineon.jpg",
+    certificateUrl: "#",
+  },
+  {
+    title: "RTOS and Real-Time Firmware",
+    issuer: "Embedded Systems Org",
+    date: "2023",
+    logo: "/src/images/starlab.jpg",
+    certificateUrl: "#",
+  },
+  {
+    title: "Digital Logic Design",
+    issuer: "YadaYada School",
+    date: "2022",
+    logo: "/src/images/infineon.jpg",
+    certificateUrl: "#",
+  },
+];
+
+// How many cards visible per "page" (row)
+const VISIBLE_COUNT = 3;
+const CARD_WIDTH = 322; // px + gap
 
 export function Certifications() {
-  // Add sample org logos
-  const certifications = [
-    {
-      title: "Advanced C Programming for Beginners",
-      issuer: "Programming Hub",
-      date: "2024",
-      icon: ScrollText,
-      certificateUrl: "#",
-      logo: "https://seeklogo.com/images/P/programming-hub-logo-4A7587A772-seeklogo.com.png",
-    },
-    {
-      title: "Operating Systems Architecture",
-      issuer: "University Course",
-      date: "2023",
-      icon: ScrollText,
-      certificateUrl: "#",
-      logo: "https://upload.wikimedia.org/wikipedia/en/1/18/Indian_Institute_of_Information_Technology%2C_Surat_Logo.png",
-    },
-    {
-      title: "Computer Networks Fundamentals",
-      issuer: "University Course",
-      date: "2023",
-      icon: ScrollText,
-      certificateUrl: "#",
-      logo: "https://upload.wikimedia.org/wikipedia/en/1/18/Indian_Institute_of_Information_Technology%2C_Surat_Logo.png",
-    }
-  ];
+  const scrollRef = useRef<HTMLDivElement>(null);
+  // Track if mouse is hovered (for pause)
+  const [running, setRunning] = useState(true);
 
-  // Loop for a smooth swipe
-  const sliderRef = useRef<HTMLDivElement>(null);
-
-  // Animation handled via CSS
+  // Slower smooth left-to-right auto-scroll
   useEffect(() => {
-    const slider = sliderRef.current;
-    if (!slider) return;
-
-    let id: number;
-    const step = () => {
-      slider.scrollLeft += 1;
-      if (slider.scrollLeft >= slider.scrollWidth / 2) {
-        slider.scrollLeft = 0;
+    const el = scrollRef.current;
+    if (!el) return;
+    let raf: number;
+    const doScroll = () => {
+      if (!running) {
+        raf = requestAnimationFrame(doScroll);
+        return;
       }
-      id = requestAnimationFrame(step);
+      el.scrollLeft += 0.12; // slower
+      if (el.scrollLeft >= el.scrollWidth - el.clientWidth - 2) {
+        el.scrollLeft = 0;
+      }
+      raf = requestAnimationFrame(doScroll);
     };
-    id = requestAnimationFrame(step);
-
-    // Pause on hover
-    const pause = () => cancelAnimationFrame(id);
-    const resume = () => { id = requestAnimationFrame(step); };
-
-    slider.addEventListener("mouseenter", pause);
-    slider.addEventListener("mouseleave", resume);
-
+    raf = requestAnimationFrame(doScroll);
     return () => {
-      cancelAnimationFrame(id);
-      slider.removeEventListener("mouseenter", pause);
-      slider.removeEventListener("mouseleave", resume);
+      cancelAnimationFrame(raf);
     };
-  }, []);
+  }, [running]);
 
-  // Double certifications array for infinite loop
-  const certsLoop = [...certifications, ...certifications];
+  // Pause on hover
+  const handleMouseEnter = () => setRunning(false);
+  const handleMouseLeave = () => setRunning(true);
 
+  // Manual scroll arrow
+  const scrollRight = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollLeft += CARD_WIDTH;
+    }
+  };
+
+  // Responsive width for cards/track
   return (
-    <section id="certifications" className="py-20 px-4 bg-accent/10">
+    <section id="certifications" className="py-20 px-4">
       <div className="container mx-auto max-w-7xl">
-        <h2 className="text-3xl font-bold text-center mb-12">Certifications & Coursework</h2>
-        <div
-          className="relative w-full overflow-x-hidden"
-        >
+        <h2 className="text-3xl font-bold text-center mb-10">
+          Certifications &amp; Coursework
+        </h2>
+        <div className="w-full relative">
           <div
-            ref={sliderRef}
-            className="flex gap-8 py-6"
+            ref={scrollRef}
+            className="flex flex-row overflow-x-auto gap-8 scrollbar-hide group items-center"
             style={{
-              width: "100%",
-              overflowX: "scroll",
               scrollBehavior: "smooth",
-              scrollbarWidth: "none",
+              WebkitOverflowScrolling: "touch",
+              minHeight: "428px",
+              height: "428px",
+              paddingBottom: "8px",
             }}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            tabIndex={0}
           >
-            {certsLoop.map((cert, idx) => (
-              <Card
-                key={idx}
-                className="min-w-[375px] max-w-sm aspect-[4.5/1] flex flex-row items-center justify-between px-6 py-4 group shadow-lg border-purple-200 hover:border-purple-500 transition-all mx-2"
+            {certifications.map((cert, idx) => (
+              <div
+                key={cert.title + idx}
+                className="flex flex-col items-center bg-card rounded-2xl shadow-lg border border-accent w-[300px] md:w-[320px] h-[400px] md:h-[400px] mx-2 relative pt-6 px-6 pb-4 transition-transform duration-300 hover:scale-105"
+                style={{
+                  aspectRatio: "4/3",
+                  minWidth: 300,
+                  maxWidth: 340,
+                }}
               >
-                <img
-                  src={cert.logo}
-                  alt={cert.issuer}
-                  className="h-14 w-14 rounded-xl object-contain bg-white border mr-4"
-                />
-                <div className="flex-1">
-                  <CardTitle className="text-lg mb-1">{cert.title}</CardTitle>
-                  <p className="text-purple-600 text-xs mb-1">{cert.issuer}</p>
-                  <a
-                    href={cert.certificateUrl}
-                    className="inline-flex items-center text-sm text-purple-500 hover:text-purple-700 transition-colors"
-                  >
-                    <ExternalLink className="w-4 h-4 mr-1" />
-                    View Credential
-                  </a>
+                <div className="flex items-center justify-center h-14 w-14 rounded-full mb-4 bg-accent/70 border">
+                  <img src={cert.logo} alt={cert.issuer} className="h-9 w-9 object-contain" />
                 </div>
-              </Card>
+                <h3 className="font-bold text-lg text-center mb-2">{cert.title}</h3>
+                <div className="text-xs text-muted-foreground text-center mb-1">{cert.issuer}</div>
+                <div className="text-xs text-muted-foreground mb-4">{cert.date}</div>
+                <div className="flex-1" />
+                <a
+                  href={cert.certificateUrl}
+                  className="flex items-center justify-center text-xs text-purple-500 hover:text-purple-600 font-medium px-3 py-2 bg-accent rounded-full w-full transition-colors mt-auto"
+                  target="_blank"
+                  rel="noopener"
+                  tabIndex={-1}
+                >
+                  <ExternalLink className="w-3 h-3 mr-2" />
+                  View Credential
+                </a>
+              </div>
             ))}
           </div>
+          {/* Right Arrow */}
+          <button
+            aria-label="Scroll right"
+            className="absolute top-1/2 -translate-y-1/2 right-0 bg-white/90 hover:bg-accent transition-colors shadow-md rounded-full p-1 z-10 border border-accent"
+            style={{
+              display: "block",
+            }}
+            onClick={scrollRight}
+          >
+            <ArrowRight className="w-7 h-7 text-purple-500" />
+          </button>
         </div>
+        <style>
+          {`.scrollbar-hide::-webkit-scrollbar { display: none; }`}
+        </style>
       </div>
     </section>
   );

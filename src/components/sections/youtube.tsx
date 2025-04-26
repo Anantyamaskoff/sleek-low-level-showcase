@@ -1,28 +1,30 @@
 
-import { useEffect, useRef } from "react";
+import { useRef, useEffect } from "react";
 
 export function YoutubeSection() {
   const videos = [
-    { id: "video1", title: "Embedded Systems Tutorial" },
-    { id: "video2", title: "Linux Kernel Development" },
-    { id: "video3", title: "Firmware Programming" },
+    { id: "9KHLTZaJcR8", title: "Embedded Systems Tutorial" },
+    { id: "lxTgsbPLBvI", title: "Linux Kernel Development" },
+    { id: "86dqFixtFUM", title: "Firmware Programming" },
   ];
 
-  // Animation on scroll in
   const videoRefs = useRef<(HTMLDivElement | null)[]>([]);
+
   useEffect(() => {
     const observer = new window.IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("animate-video-pop");
+        for (const entry of entries) {
+          if (entry.isIntersecting && entry.target instanceof HTMLElement) {
+            entry.target.classList.add("video-pop");
           }
-        });
+        }
       },
-      { threshold: 0.3 }
+      {
+        threshold: 0.2,
+      }
     );
-    videoRefs.current.forEach((el) => {
-      if (el) observer.observe(el);
+    videoRefs.current.forEach((ref) => {
+      if (ref) observer.observe(ref);
     });
     return () => observer.disconnect();
   }, []);
@@ -34,10 +36,9 @@ export function YoutubeSection() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {videos.map((video, i) => (
             <div
-              ref={el => videoRefs.current[i] = el}
               key={video.id}
-              className="aspect-video max-w-sm mx-auto w-full opacity-0"
-              style={{ animationFillMode: "forwards" }}
+              ref={el => videoRefs.current[i] = el}
+              className="aspect-video max-w-sm mx-auto w-full opacity-0 scale-95 transition-all duration-1000"
             >
               <iframe
                 src={`https://www.youtube.com/embed/${video.id}`}
@@ -51,14 +52,10 @@ export function YoutubeSection() {
         </div>
         <style>
           {`
-          @keyframes video-pop {
-            0% { opacity: 0; transform: scale(0.85); }
-            80% { opacity: 1; transform: scale(1.05);}
-            100% { opacity: 1; transform: scale(1);}
-          }
-          .animate-video-pop {
-            animation: video-pop 0.8s cubic-bezier(.2,1.2,.4,1) forwards;
+          .video-pop {
             opacity: 1 !important;
+            transform: scale(1) !important;
+            transition: opacity 1s, transform 0.9s;
           }
           `}
         </style>
