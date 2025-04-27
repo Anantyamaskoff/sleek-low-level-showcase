@@ -76,12 +76,12 @@ export function Hero() {
                   <Linkedin className="h-4 w-4" /> LinkedIn
                 </a>
               </Button>
-              <Button asChild variant="outline" size="sm" className="flex-1 min-w-0 bg-purple-500 hover:bg-purple-600 text-white border-[#2EA44F]">
+              <Button asChild variant="outline" size="sm" className="flex-1 min-w-0 bg-[#2EA44F] hover:bg-[#2EA44F]/90 text-white border-[#2EA44F]">
                 <a href="/resume.pdf" target="_blank" rel="noopener" className="flex items-center gap-1 px-0 w-full justify-center">
                   <FileText className="h-4 w-4" /> Resume
                 </a>
               </Button>
-              <Button asChild variant="outline" size="sm" className="flex-1 min-w-0 bg-[#2EA44F] hover:bg-[#2EA44F]/90 text-white border-purple-500">
+              <Button asChild variant="outline" size="sm" className="flex-1 min-w-0 bg-purple-500 hover:bg-purple-600 text-white border-purple-500">
                 <a href="https://github.com" target="_blank" rel="noopener" className="flex items-center gap-1 px-0 w-full justify-center">
                   <Github className="h-4 w-4" /> GitHub
                 </a>
