@@ -46,7 +46,7 @@ export function Certifications() {
           animationDirection: "normal"
         }}>
             {[...certifications, ...certifications].map((cert, idx) => <div key={cert.title + idx} className="flex flex-col bg-card rounded-xl shadow-md border border-accent w-[280px] aspect-[4/3] shrink-0 p-4 justify-between">
-                <h3 className="text-lg font-bold mb-auto text-center break-words line-clamp-2">{cert.title}</h3>
+                <h3 className="font-bold mb-auto break-words line-clamp-2 text-lg text-left">{cert.title}</h3>
                 <div className="text-sm text-muted-foreground mb-1 text-center">{cert.issuer}</div>
                 <div className="text-sm text-muted-foreground text-center">{cert.date}</div>
                 <a href={cert.certificateUrl} className="flex items-center justify-center text-sm text-purple-500 hover:text-purple-600 font-medium mt-3" target="_blank" rel="noopener">
