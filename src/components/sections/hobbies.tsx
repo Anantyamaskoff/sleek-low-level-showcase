@@ -1,3 +1,4 @@
+
 import { useEffect, useRef } from "react";
 
 // 10 hobbies max, split into two rows
@@ -14,46 +15,104 @@ const hobbies = [
   { title: "Travel", image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=300" },
 ];
 
+function useAutoScroll(isReverse: boolean, rowRef: React.RefObject<HTMLDivElement>, cardWidth = 166, speed = 0.08) {
+  // Animate scrollLeft or scrollRight, slow, smooth
+  useEffect(() => {
+    const container = rowRef.current;
+    if (!container) return;
+    let raf: number;
+    let running = true;
+    const maxScroll = container.scrollWidth - container.clientWidth;
+    const scrollStep = isReverse ? -speed : speed; // slower (in px/frame)
+    const handle = () => {
+      if (!running) {
+        raf = requestAnimationFrame(handle);
+        return;
+      }
+      container.scrollLeft += scrollStep;
+      // Scroll cycling: left->right, right->left
+      if (!isReverse && container.scrollLeft >= maxScroll - 1) { container.scrollLeft = 0; }
+      if (isReverse && container.scrollLeft <= 0) { container.scrollLeft = maxScroll; }
+      raf = requestAnimationFrame(handle);
+    };
+    raf = requestAnimationFrame(handle);
+    const pause = () => { running = false; };
+    const resume = () => { running = true; };
+    container.addEventListener("mouseenter", pause);
+    container.addEventListener("mouseleave", resume);
+    return () => {
+      if (raf) cancelAnimationFrame(raf);
+      container.removeEventListener("mouseenter", pause);
+      container.removeEventListener("mouseleave", resume);
+    };
+  }, [isReverse, rowRef, speed]);
+}
+
 export function Hobbies() {
+  const upperRef = useRef<HTMLDivElement>(null);
+  const lowerRef = useRef<HTMLDivElement>(null);
+  useAutoScroll(false, upperRef, 166, 0.08); // left to right slow
+  useAutoScroll(true, lowerRef, 166, 0.08); // right to left slow
+
+  // Show 2x hobbies in each row to create a "loop" effect
+  const hobbiesDoubled = [...hobbies, ...hobbies];
+
   return (
-    <section id="hobbies" className="py-12 px-4 overflow-hidden">
+    <section id="hobbies" className="py-12 px-4">
       <div className="container mx-auto max-w-7xl">
         <h2 className="text-3xl font-bold text-center mb-8">Hobbies & Interests</h2>
-        <div className="space-y-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {hobbies.slice(0, 6).map((hobby, index) => (
-              <div
-                key={`row1-${hobby.title}-${index}`}
-                className="relative w-full aspect-[4/3] overflow-hidden rounded-lg group"
-              >
-                <img
-                  src={hobby.image}
-                  alt={hobby.title}
-                  className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-4">
-                  <span className="text-white font-medium">{hobby.title}</span>
+        <div className="relative overflow-hidden">
+          <div className="space-y-4">
+            {/* Row 1: -> left to right */}
+            <div
+              ref={upperRef}
+              className="flex flex-nowrap gap-4 overflow-x-auto py-1 scrollbar-hide group"
+              style={{ scrollBehavior: "smooth", minHeight: "138px" }}
+            >
+              {hobbiesDoubled.map((hobby, index) => (
+                <div
+                  key={`row1-${hobby.title}-${index}`}
+                  className="hobby-card group relative w-[150px] md:w-[166px] aspect-[4/3] flex-shrink-0"
+                  tabIndex={-1}
+                >
+                  <img
+                    src={hobby.image}
+                    alt={hobby.title}
+                    className="w-full h-full object-cover rounded-lg"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-2 rounded-lg">
+                    <span className="text-white font-medium text-xs md:text-sm">{hobby.title}</span>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {hobbies.slice(6).map((hobby, index) => (
-              <div
-                key={`row2-${hobby.title}-${index}`}
-                className="relative w-full aspect-[4/3] overflow-hidden rounded-lg group"
-              >
-                <img
-                  src={hobby.image}
-                  alt={hobby.title}
-                  className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-4">
-                  <span className="text-white font-medium">{hobby.title}</span>
+              ))}
+            </div>
+            {/* Row 2: <- (right to left, opposite direction) */}
+            <div
+              ref={lowerRef}
+              className="flex flex-nowrap gap-4 overflow-x-auto py-1 scrollbar-hide group"
+              style={{ scrollBehavior: "smooth", minHeight: "138px" }}
+            >
+              {hobbiesDoubled.slice().reverse().map((hobby, index) => (
+                <div
+                  key={`row2-${hobby.title}-${index}`}
+                  className="hobby-card group relative w-[150px] md:w-[166px] aspect-[4/3] flex-shrink-0"
+                  tabIndex={-1}
+                >
+                  <img
+                    src={hobby.image}
+                    alt={hobby.title}
+                    className="w-full h-full object-cover rounded-lg"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-2 rounded-lg">
+                    <span className="text-white font-medium text-xs md:text-sm">{hobby.title}</span>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
+          <style>
+          {`.scrollbar-hide::-webkit-scrollbar { display: none; }`}
+          </style>
         </div>
       </div>
     </section>
