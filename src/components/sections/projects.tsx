@@ -55,15 +55,15 @@ export function Projects() {
   };
 
   return (
-    <section id="projects" className="py-20 px-4">
+    <section id="projects" className="py-20 px-8">
       <div className="container mx-auto">
         <h2 className="text-3xl font-bold text-center mb-12">Featured Projects</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {projects.map((project, idx) => (
             <div key={project.title} className="relative">
-              {/* Regular Card */}
               {openIdx !== idx && (
-                <div className="group bg-card border rounded-xl overflow-hidden hover:border-purple-500/50 transition-all duration-300 shadow-lg cursor-pointer"
+                <div 
+                  className="group bg-card border rounded-xl overflow-hidden hover:border-purple-500/50 transition-all duration-300 cursor-pointer hover:scale-[1.02]"
                   onClick={() => setOpenIdx(idx)}
                 >
                   <img

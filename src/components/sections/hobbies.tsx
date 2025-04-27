@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 
-// 10 hobbies max, split into two rows
 const hobbies = [
   { title: "Photography", image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=300" },
   { title: "Technical Reading", image: "https://images.unsplash.com/photo-1461749280684-dccba630e475?auto=format&fit=crop&w=300" },
@@ -15,21 +14,19 @@ const hobbies = [
 ];
 
 function useAutoScroll(isReverse: boolean, rowRef: React.RefObject<HTMLDivElement>, cardWidth = 166, speed = 0.08) {
-  // Animate scrollLeft or scrollRight, slow, smooth
   useEffect(() => {
     const container = rowRef.current;
     if (!container) return;
     let raf: number;
     let running = true;
     const maxScroll = container.scrollWidth - container.clientWidth;
-    const scrollStep = isReverse ? -speed : speed; // slower (in px/frame)
+    const scrollStep = isReverse ? -speed : speed;
     const handle = () => {
       if (!running) {
         raf = requestAnimationFrame(handle);
         return;
       }
       container.scrollLeft += scrollStep;
-      // Scroll cycling: left->right, right->left
       if (!isReverse && container.scrollLeft >= maxScroll - 1) { container.scrollLeft = 0; }
       if (isReverse && container.scrollLeft <= 0) { container.scrollLeft = maxScroll; }
       raf = requestAnimationFrame(handle);
@@ -51,8 +48,8 @@ export function Hobbies() {
   const upperRef = useRef<HTMLDivElement>(null);
   const lowerRef = useRef<HTMLDivElement>(null);
 
-  useAutoScroll(false, upperRef, 180, 0.08); // left to right slower
-  useAutoScroll(true, lowerRef, 180, 0.08); // right to left slower
+  useAutoScroll(false, upperRef, 180, 0.05);
+  useAutoScroll(true, lowerRef, 180, 0.05);
 
   const hobbiesDoubled = [...hobbies, ...hobbies];
 
@@ -62,16 +59,15 @@ export function Hobbies() {
         <h2 className="text-3xl font-bold text-center mb-8">Hobbies & Interests</h2>
         <div className="relative overflow-hidden">
           <div className="space-y-4">
-            {/* Row 1: -> */}
             <div
               ref={upperRef}
-              className="flex flex-nowrap gap-4 overflow-x-auto py-1 scrollbar-hide"
-              style={{ scrollBehavior: "smooth", minHeight: "180px" }}
+              className="flex flex-nowrap gap-4 overflow-hidden py-1"
+              style={{ minHeight: "200px" }}
             >
               {hobbiesDoubled.map((hobby, index) => (
                 <div
                   key={`row1-${hobby.title}-${index}`}
-                  className="hobby-card relative w-[220px] aspect-[4/3] flex-shrink-0"
+                  className="hobby-card relative w-[240px] aspect-[4/3] flex-shrink-0"
                 >
                   <img
                     src={hobby.image}
@@ -84,16 +80,15 @@ export function Hobbies() {
                 </div>
               ))}
             </div>
-            {/* Row 2: <- */}
             <div
               ref={lowerRef}
-              className="flex flex-nowrap gap-4 overflow-x-auto py-1 scrollbar-hide"
-              style={{ scrollBehavior: "smooth", minHeight: "180px" }}
+              className="flex flex-nowrap gap-4 overflow-hidden py-1"
+              style={{ minHeight: "200px" }}
             >
               {hobbiesDoubled.slice().reverse().map((hobby, index) => (
                 <div
                   key={`row2-${hobby.title}-${index}`}
-                  className="hobby-card relative w-[220px] aspect-[4/3] flex-shrink-0"
+                  className="hobby-card relative w-[240px] aspect-[4/3] flex-shrink-0"
                 >
                   <img
                     src={hobby.image}

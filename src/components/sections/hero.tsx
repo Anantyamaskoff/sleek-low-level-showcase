@@ -45,24 +45,17 @@ export function Hero() {
   const maxRoleLen = roles.reduce((a, b) => a.length > b.length ? a : b, "");
 
   return (
-    <section className="pt-24 pb-16 px-4 flex items-center min-h-[70vh]">
-      <div className="container mx-auto max-w-6xl flex flex-col md:flex-row gap-14 md:gap-20 items-center md:items-start justify-center">
+    <section className="pt-32 pb-16 px-4 flex items-center min-h-[70vh]">
+      <div className="container mx-auto max-w-6xl flex flex-col md:flex-row gap-8 md:gap-20 items-center md:items-start justify-center">
         <div className="flex-1 flex flex-col items-center md:items-end justify-center w-full max-w-sm md:max-w-none">
-          <div className="relative mb-6 flex flex-col items-center w-full">
+          <div className="relative mb-4 flex flex-col items-center w-full">
             <img
               src="/src/images/image.jpg"
               alt="Profile"
-              className="w-48 h-48 md:w-56 md:h-56 object-cover rounded-full border-4 border-white dark:border-card shadow-xl bg-white"
-              style={{ marginBottom: "32px" }}
+              className="w-44 h-44 md:w-48 md:h-48 object-cover rounded-full border-4 border-white dark:border-card shadow-xl bg-white"
+              style={{ marginBottom: "24px" }}
             />
-            <div
-              className="w-[300px] md:w-[340px] bg-background/95 shadow-lg border rounded-2xl flex items-center px-5 py-3 gap-3"
-              style={{
-                minWidth: 280,
-                maxWidth: "98vw",
-                marginTop: "12px"
-              }}
-            >
+            <div className="w-[300px] md:w-[340px] bg-background/95 shadow-lg border rounded-2xl flex items-center px-5 py-3 gap-3 mb-4">
               <img
                 src="/src/images/infineon.jpg"
                 alt="University Logo"
@@ -77,26 +70,26 @@ export function Hero() {
                 </div>
               </div>
             </div>
-          </div>
-          <div className="flex flex-row gap-3 w-[300px] md:w-[340px] mx-auto justify-center mt-4">
-            <Button asChild className="flex-1 min-w-0" variant="outline" size="sm">
-              <a href="https://linkedin.com" target="_blank" rel="noopener" className="flex items-center gap-2 px-0 w-full justify-center">
-                <Linkedin className="h-4 w-4" /> LinkedIn
-              </a>
-            </Button>
-            <Button asChild className="flex-1 min-w-0" variant="outline" size="sm">
-              <a href="/resume.pdf" target="_blank" rel="noopener" className="flex items-center gap-2 px-0 w-full justify-center">
-                <FileText className="h-4 w-4" /> Resume
-              </a>
-            </Button>
-            <Button asChild className="flex-1 min-w-0" variant="outline" size="sm">
-              <a href="https://github.com" target="_blank" rel="noopener" className="flex items-center gap-2 px-0 w-full justify-center">
-                <Github className="h-4 w-4" /> GitHub
-              </a>
-            </Button>
+            <div className="flex flex-row gap-3 w-[300px] md:w-[340px] mx-auto justify-center">
+              <Button asChild className="flex-1 min-w-0" variant="outline" size="sm">
+                <a href="https://linkedin.com" target="_blank" rel="noopener" className="flex items-center gap-2 px-0 w-full justify-center">
+                  <Linkedin className="h-4 w-4" /> LinkedIn
+                </a>
+              </Button>
+              <Button asChild className="flex-1 min-w-0" variant="outline" size="sm">
+                <a href="/resume.pdf" target="_blank" rel="noopener" className="flex items-center gap-2 px-0 w-full justify-center">
+                  <FileText className="h-4 w-4" /> Resume
+                </a>
+              </Button>
+              <Button asChild className="flex-1 min-w-0" variant="outline" size="sm">
+                <a href="https://github.com" target="_blank" rel="noopener" className="flex items-center gap-2 px-0 w-full justify-center">
+                  <Github className="h-4 w-4" /> GitHub
+                </a>
+              </Button>
+            </div>
           </div>
         </div>
-        <div className="flex-1 flex flex-col items-center md:items-start justify-center w-full mt-24 md:mt-0 min-w-0">
+        <div className="flex-1 flex flex-col items-center md:items-start justify-center w-full mt-16 md:mt-0 min-w-0">
           <h1 className="text-3xl sm:text-4xl font-bold flex items-center gap-2 mb-5 whitespace-nowrap">
             Hi, I’m yadayada{" "}
             <span

@@ -10,7 +10,7 @@ export function Contact() {
           I'm always open to new opportunities and collaborations.
         </p>
         <Button asChild size="lg" className="px-8">
-          <a href="mailto:your@email.com">
+          <a href="mailto:your@email.com?subject=Opportunity%20Discussion">
             Send me an email
           </a>
         </Button>

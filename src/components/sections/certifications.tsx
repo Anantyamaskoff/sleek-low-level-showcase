@@ -40,41 +40,6 @@ const certifications = [
 ];
 
 export function Certifications() {
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-    let raf: number;
-    let running = true;
-
-    const doScroll = () => {
-      if (!running) {
-        raf = requestAnimationFrame(doScroll);
-        return;
-      }
-      el.scrollLeft += 0.5; // Slower scroll
-      if (el.scrollLeft >= el.scrollWidth - el.clientWidth - 2) {
-        el.scrollLeft = 0;
-      }
-      raf = requestAnimationFrame(doScroll);
-    };
-
-    raf = requestAnimationFrame(doScroll);
-
-    const pause = () => { running = false; };
-    const resume = () => { running = true; };
-    
-    el.addEventListener("mouseenter", pause);
-    el.addEventListener("mouseleave", resume);
-
-    return () => {
-      if (raf) cancelAnimationFrame(raf);
-      el?.removeEventListener("mouseenter", pause);
-      el?.removeEventListener("mouseleave", resume);
-    };
-  }, []);
-
   return (
     <section id="certifications" className="py-16 px-4">
       <div className="container mx-auto max-w-7xl">
@@ -83,21 +48,28 @@ export function Certifications() {
         </h2>
         <div className="w-full relative overflow-hidden">
           <div
-            ref={scrollRef}
-            className="flex flex-row gap-6 overflow-x-auto scrollbar-hide py-4"
+            className="flex flex-row gap-6 animate-scroll py-4"
             style={{
-              scrollBehavior: "smooth",
-              minHeight: "220px"
+              whiteSpace: "nowrap",
+              animationDuration: "30s",
+              animationTimingFunction: "linear",
+              animationIterationCount: "infinite",
+              animationDirection: "normal",
+              animationFillMode: "none",
+              animationPlayState: "running",
+              "&:hover": {
+                animationPlayState: "paused"
+              }
             }}
           >
-            {certifications.map((cert, idx) => (
+            {[...certifications, ...certifications].map((cert, idx) => (
               <div
                 key={cert.title + idx}
-                className="flex flex-col bg-card rounded-xl shadow-lg border border-accent w-[300px] aspect-[4/3] shrink-0 p-6"
+                className="flex flex-col bg-card rounded-xl shadow-lg border border-accent w-[320px] aspect-[4/3] shrink-0 p-6"
               >
-                <h3 className="text-xl font-bold mb-2">{cert.title}</h3>
-                <div className="text-sm text-muted-foreground mb-1">{cert.issuer}</div>
-                <div className="text-sm text-muted-foreground">{cert.date}</div>
+                <h3 className="text-xl font-bold mb-2 text-center">{cert.title}</h3>
+                <div className="text-sm text-muted-foreground mb-1 text-center">{cert.issuer}</div>
+                <div className="text-sm text-muted-foreground text-center">{cert.date}</div>
                 <div className="flex-1" />
                 <a
                   href={cert.certificateUrl}
