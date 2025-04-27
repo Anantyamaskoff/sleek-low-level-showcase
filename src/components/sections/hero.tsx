@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from "react";
-import { Linkedin, Github, FileText, Star } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Linkedin, Github, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const roles = [
@@ -45,31 +45,17 @@ export function Hero() {
   const maxRoleLen = roles.reduce((a, b) => a.length > b.length ? a : b, "");
 
   return (
-    <section className="pt-40 pb-16 px-4 flex items-center min-h-[70vh] overflow-x-hidden">
+    <section className="pt-32 pb-16 px-4 flex items-center min-h-[70vh] overflow-x-hidden">
       <div className="container mx-auto max-w-6xl flex flex-col md:flex-row gap-8 md:gap-20 items-center md:items-start justify-center">
         <div className="flex-1 flex flex-col items-center md:items-end justify-center w-full max-w-sm md:max-w-none relative">
           <div className="relative mb-4 flex flex-col items-center w-full">
-            {[...Array(5)].map((_, i) => (
-              <Star
-                key={i}
-                className="absolute text-white/30 animate-pulse"
-                style={{
-                  top: `${Math.random() * 100}%`,
-                  left: `${Math.random() * 100}%`,
-                  transform: `rotate(${Math.random() * 360}deg)`,
-                  width: `${Math.random() * 16 + 8}px`,
-                  height: `${Math.random() * 16 + 8}px`,
-                  animationDelay: `${Math.random() * 2}s`,
-                }}
-              />
-            ))}
             <img
               src="/src/images/image.jpg"
               alt="Profile"
-              className="w-36 h-36 md:w-40 md:h-40 object-cover rounded-full border-4 border-white dark:border-card shadow-xl bg-white"
+              className="w-40 h-40 md:w-44 md:h-44 object-cover rounded-full border-4 border-white dark:border-card shadow-xl bg-white"
               style={{ marginBottom: "24px" }}
             />
-            <div className="w-[280px] md:w-[320px] bg-background/95 shadow-lg border rounded-2xl flex items-center px-4 py-2.5 gap-3 mb-3">
+            <div className="w-[280px] md:w-[320px] bg-background/95 shadow-lg border rounded-2xl flex items-center px-4 py-2.5 gap-3 mb-3 hover:shadow-xl transition-shadow">
               <img
                 src="/src/images/infineon.jpg"
                 alt="University Logo"
@@ -85,17 +71,17 @@ export function Hero() {
               </div>
             </div>
             <div className="flex flex-row gap-2 w-[280px] md:w-[320px] mx-auto justify-center">
-              <Button asChild variant="outline" size="sm" className="flex-1 min-w-0 bg-purple-100 hover:bg-purple-200 border-purple-200">
+              <Button asChild variant="outline" size="sm" className="flex-1 min-w-0 bg-[#0077B5] hover:bg-[#0077B5]/90 text-white border-[#0077B5]">
                 <a href="https://linkedin.com" target="_blank" rel="noopener" className="flex items-center gap-1 px-0 w-full justify-center">
                   <Linkedin className="h-4 w-4" /> LinkedIn
                 </a>
               </Button>
-              <Button asChild variant="outline" size="sm" className="flex-1 min-w-0 bg-blue-100 hover:bg-blue-200 border-blue-200">
+              <Button asChild variant="outline" size="sm" className="flex-1 min-w-0 bg-[#2EA44F] hover:bg-[#2EA44F]/90 text-white border-[#2EA44F]">
                 <a href="/resume.pdf" target="_blank" rel="noopener" className="flex items-center gap-1 px-0 w-full justify-center">
                   <FileText className="h-4 w-4" /> Resume
                 </a>
               </Button>
-              <Button asChild variant="outline" size="sm" className="flex-1 min-w-0 bg-gray-100 hover:bg-gray-200 border-gray-200">
+              <Button asChild variant="outline" size="sm" className="flex-1 min-w-0 bg-purple-500 hover:bg-purple-600 text-white border-purple-500">
                 <a href="https://github.com" target="_blank" rel="noopener" className="flex items-center gap-1 px-0 w-full justify-center">
                   <Github className="h-4 w-4" /> GitHub
                 </a>
@@ -103,7 +89,7 @@ export function Hero() {
             </div>
           </div>
         </div>
-        <div className="flex-1 flex flex-col items-center md:items-start justify-center w-full mt-8 md:mt-20 min-w-0">
+        <div className="flex-1 flex flex-col items-center md:items-start justify-center w-full mt-4 md:mt-16 min-w-0">
           <h1 className="text-3xl sm:text-4xl font-bold flex items-center gap-2 mb-5 whitespace-nowrap">
             Hi, I’m yadayada{" "}
             <span

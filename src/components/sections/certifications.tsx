@@ -60,9 +60,9 @@ export function Certifications() {
             {[...certifications, ...certifications].map((cert, idx) => (
               <div
                 key={cert.title + idx}
-                className="flex flex-col bg-card rounded-xl shadow-md border border-accent w-[280px] aspect-[4/3] shrink-0 p-5"
+                className="flex flex-col bg-card rounded-xl shadow-md border border-accent w-[280px] aspect-[4/3] shrink-0 p-4"
               >
-                <h3 className="text-lg font-bold mb-auto text-center">{cert.title}</h3>
+                <h3 className="text-lg font-bold mb-auto text-center break-words line-clamp-2">{cert.title}</h3>
                 <div className="text-sm text-muted-foreground mb-1 text-center">{cert.issuer}</div>
                 <div className="text-sm text-muted-foreground text-center">{cert.date}</div>
                 <a
@@ -71,7 +71,6 @@ export function Certifications() {
                   target="_blank"
                   rel="noopener"
                 >
-                  <ExternalLink className="w-4 h-4 mr-2" />
                   View Credential
                 </a>
               </div>
