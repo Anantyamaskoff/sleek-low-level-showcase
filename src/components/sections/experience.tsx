@@ -22,7 +22,7 @@ const experiences = [
   {
     title: "Avionics Intern",
     company: "Space Technology and Aeronautical Rocketry",
-    period: "2023",
+    period: "May - June 2024",
     description: "Developed embedded systems and flight control software for experimental rockets.",
     logo: "/src/images/starlab.jpg",
     companyUrl: "https://in.linkedin.com/company/starlabsurat1",
