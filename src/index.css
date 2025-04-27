@@ -104,7 +104,11 @@
 }
 
 .animate-scroll {
-  animation: scroll 40s linear infinite;
+  animation: scroll 20s linear infinite;
+}
+
+.hover\:animation-play-state-paused:hover {
+  animation-play-state: paused;
 }
 
 .slide-in-right {
