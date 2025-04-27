@@ -1,4 +1,3 @@
-
 import { useEffect, useRef } from "react";
 
 // 10 hobbies max, split into two rows
@@ -51,10 +50,10 @@ function useAutoScroll(isReverse: boolean, rowRef: React.RefObject<HTMLDivElemen
 export function Hobbies() {
   const upperRef = useRef<HTMLDivElement>(null);
   const lowerRef = useRef<HTMLDivElement>(null);
-  useAutoScroll(false, upperRef, 166, 0.08); // left to right slow
-  useAutoScroll(true, lowerRef, 166, 0.08); // right to left slow
 
-  // Show 2x hobbies in each row to create a "loop" effect
+  useAutoScroll(false, upperRef, 180, 0.08); // left to right slower
+  useAutoScroll(true, lowerRef, 180, 0.08); // right to left slower
+
   const hobbiesDoubled = [...hobbies, ...hobbies];
 
   return (
@@ -63,17 +62,16 @@ export function Hobbies() {
         <h2 className="text-3xl font-bold text-center mb-8">Hobbies & Interests</h2>
         <div className="relative overflow-hidden">
           <div className="space-y-4">
-            {/* Row 1: -> left to right */}
+            {/* Row 1: -> */}
             <div
               ref={upperRef}
-              className="flex flex-nowrap gap-4 overflow-x-auto py-1 scrollbar-hide group"
-              style={{ scrollBehavior: "smooth", minHeight: "138px" }}
+              className="flex flex-nowrap gap-4 overflow-x-auto py-1 scrollbar-hide"
+              style={{ scrollBehavior: "smooth", minHeight: "180px" }}
             >
               {hobbiesDoubled.map((hobby, index) => (
                 <div
                   key={`row1-${hobby.title}-${index}`}
-                  className="hobby-card group relative w-[150px] md:w-[166px] aspect-[4/3] flex-shrink-0"
-                  tabIndex={-1}
+                  className="hobby-card relative w-[220px] aspect-[4/3] flex-shrink-0"
                 >
                   <img
                     src={hobby.image}
@@ -81,22 +79,21 @@ export function Hobbies() {
                     className="w-full h-full object-cover rounded-lg"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-2 rounded-lg">
-                    <span className="text-white font-medium text-xs md:text-sm">{hobby.title}</span>
+                    <span className="text-white font-medium text-sm">{hobby.title}</span>
                   </div>
                 </div>
               ))}
             </div>
-            {/* Row 2: <- (right to left, opposite direction) */}
+            {/* Row 2: <- */}
             <div
               ref={lowerRef}
-              className="flex flex-nowrap gap-4 overflow-x-auto py-1 scrollbar-hide group"
-              style={{ scrollBehavior: "smooth", minHeight: "138px" }}
+              className="flex flex-nowrap gap-4 overflow-x-auto py-1 scrollbar-hide"
+              style={{ scrollBehavior: "smooth", minHeight: "180px" }}
             >
               {hobbiesDoubled.slice().reverse().map((hobby, index) => (
                 <div
                   key={`row2-${hobby.title}-${index}`}
-                  className="hobby-card group relative w-[150px] md:w-[166px] aspect-[4/3] flex-shrink-0"
-                  tabIndex={-1}
+                  className="hobby-card relative w-[220px] aspect-[4/3] flex-shrink-0"
                 >
                   <img
                     src={hobby.image}
@@ -104,15 +101,12 @@ export function Hobbies() {
                     className="w-full h-full object-cover rounded-lg"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-2 rounded-lg">
-                    <span className="text-white font-medium text-xs md:text-sm">{hobby.title}</span>
+                    <span className="text-white font-medium text-sm">{hobby.title}</span>
                   </div>
                 </div>
               ))}
             </div>
           </div>
-          <style>
-          {`.scrollbar-hide::-webkit-scrollbar { display: none; }`}
-          </style>
         </div>
       </div>
     </section>

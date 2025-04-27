@@ -1,6 +1,5 @@
-
-import { ExternalLink, ArrowRight } from "lucide-react";
-import { useRef, useEffect, useState } from "react";
+import { ExternalLink } from "lucide-react";
+import { useRef, useEffect } from "react";
 
 const certifications = [
   {
@@ -40,115 +39,79 @@ const certifications = [
   },
 ];
 
-// How many cards visible per "page" (row)
-const VISIBLE_COUNT = 3;
-const CARD_WIDTH = 322; // px + gap
-
 export function Certifications() {
   const scrollRef = useRef<HTMLDivElement>(null);
-  // Track if mouse is hovered (for pause)
-  const [running, setRunning] = useState(true);
 
-  // Slower smooth left-to-right auto-scroll
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
     let raf: number;
+    let running = true;
+
     const doScroll = () => {
       if (!running) {
         raf = requestAnimationFrame(doScroll);
         return;
       }
-      el.scrollLeft += 0.12; // slower
+      el.scrollLeft += 0.5; // Slower scroll
       if (el.scrollLeft >= el.scrollWidth - el.clientWidth - 2) {
         el.scrollLeft = 0;
       }
       raf = requestAnimationFrame(doScroll);
     };
+
     raf = requestAnimationFrame(doScroll);
+
+    const pause = () => { running = false; };
+    const resume = () => { running = true; };
+    
+    el.addEventListener("mouseenter", pause);
+    el.addEventListener("mouseleave", resume);
+
     return () => {
-      cancelAnimationFrame(raf);
+      if (raf) cancelAnimationFrame(raf);
+      el?.removeEventListener("mouseenter", pause);
+      el?.removeEventListener("mouseleave", resume);
     };
-  }, [running]);
+  }, []);
 
-  // Pause on hover
-  const handleMouseEnter = () => setRunning(false);
-  const handleMouseLeave = () => setRunning(true);
-
-  // Manual scroll arrow
-  const scrollRight = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollLeft += CARD_WIDTH;
-    }
-  };
-
-  // Responsive width for cards/track
   return (
-    <section id="certifications" className="py-20 px-4">
+    <section id="certifications" className="py-16 px-4">
       <div className="container mx-auto max-w-7xl">
-        <h2 className="text-3xl font-bold text-center mb-10">
+        <h2 className="text-3xl font-bold text-center mb-8">
           Certifications &amp; Coursework
         </h2>
-        <div className="w-full relative">
+        <div className="w-full relative overflow-hidden">
           <div
             ref={scrollRef}
-            className="flex flex-row overflow-x-auto gap-8 scrollbar-hide group items-center"
+            className="flex flex-row gap-6 overflow-x-auto scrollbar-hide py-4"
             style={{
               scrollBehavior: "smooth",
-              WebkitOverflowScrolling: "touch",
-              minHeight: "428px",
-              height: "428px",
-              paddingBottom: "8px",
+              minHeight: "220px"
             }}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            tabIndex={0}
           >
             {certifications.map((cert, idx) => (
               <div
                 key={cert.title + idx}
-                className="flex flex-col items-center bg-card rounded-2xl shadow-lg border border-accent w-[300px] md:w-[320px] h-[400px] md:h-[400px] mx-2 relative pt-6 px-6 pb-4 transition-transform duration-300 hover:scale-105"
-                style={{
-                  aspectRatio: "4/3",
-                  minWidth: 300,
-                  maxWidth: 340,
-                }}
+                className="flex flex-col bg-card rounded-xl shadow-lg border border-accent w-[300px] aspect-[4/3] shrink-0 p-6"
               >
-                <div className="flex items-center justify-center h-14 w-14 rounded-full mb-4 bg-accent/70 border">
-                  <img src={cert.logo} alt={cert.issuer} className="h-9 w-9 object-contain" />
-                </div>
-                <h3 className="font-bold text-lg text-center mb-2">{cert.title}</h3>
-                <div className="text-xs text-muted-foreground text-center mb-1">{cert.issuer}</div>
-                <div className="text-xs text-muted-foreground mb-4">{cert.date}</div>
+                <h3 className="text-xl font-bold mb-2">{cert.title}</h3>
+                <div className="text-sm text-muted-foreground mb-1">{cert.issuer}</div>
+                <div className="text-sm text-muted-foreground">{cert.date}</div>
                 <div className="flex-1" />
                 <a
                   href={cert.certificateUrl}
-                  className="flex items-center justify-center text-xs text-purple-500 hover:text-purple-600 font-medium px-3 py-2 bg-accent rounded-full w-full transition-colors mt-auto"
+                  className="flex items-center justify-center text-sm text-purple-500 hover:text-purple-600 font-medium mt-4"
                   target="_blank"
                   rel="noopener"
-                  tabIndex={-1}
                 >
-                  <ExternalLink className="w-3 h-3 mr-2" />
+                  <ExternalLink className="w-4 h-4 mr-2" />
                   View Credential
                 </a>
               </div>
             ))}
           </div>
-          {/* Right Arrow */}
-          <button
-            aria-label="Scroll right"
-            className="absolute top-1/2 -translate-y-1/2 right-0 bg-white/90 hover:bg-accent transition-colors shadow-md rounded-full p-1 z-10 border border-accent"
-            style={{
-              display: "block",
-            }}
-            onClick={scrollRight}
-          >
-            <ArrowRight className="w-7 h-7 text-purple-500" />
-          </button>
         </div>
-        <style>
-          {`.scrollbar-hide::-webkit-scrollbar { display: none; }`}
-        </style>
       </div>
     </section>
   );
