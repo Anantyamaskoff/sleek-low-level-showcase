@@ -1,4 +1,3 @@
-
 import { Github, ExternalLink, X } from "lucide-react";
 import { useState, useEffect } from "react";
 
@@ -37,8 +36,7 @@ const projects = [
 
 export function Projects() {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
-
-  // Prevent background scrolling on modal open
+  
   useEffect(() => {
     if (openIdx !== null) {
       document.body.style.overflow = "hidden";
@@ -55,48 +53,45 @@ export function Projects() {
   };
 
   return (
-    <section id="projects" className="py-20 px-8">
+    <section id="projects" className="py-20 px-12 overflow-x-hidden">
       <div className="container mx-auto">
         <h2 className="text-3xl font-bold text-center mb-12">Featured Projects</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
           {projects.map((project, idx) => (
             <div key={project.title} className="relative">
               {openIdx !== idx && (
                 <div 
-                  className="group bg-card border rounded-xl overflow-hidden hover:border-purple-500/50 transition-all duration-300 cursor-pointer hover:scale-[1.02]"
+                  className="group bg-card border rounded-xl overflow-hidden hover:border-purple-500/50 transition-all duration-300 cursor-pointer hover:scale-[1.02] shadow-md hover:shadow-xl"
                   onClick={() => setOpenIdx(idx)}
                 >
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="w-full h-64 object-cover"
+                    className="w-full h-52 object-cover"
                     style={{ aspectRatio: '4/3' }}
                   />
-                  <div className="p-8">
-                    <h3 className="text-2xl font-semibold mb-4">{project.title}</h3>
-                    <p className="text-muted-foreground mb-6">{project.description}</p>
-                    <div className="flex flex-wrap gap-3 mb-6">
+                  <div className="p-6">
+                    <h3 className="text-xl font-semibold mb-3">{project.title}</h3>
+                    <p className="text-muted-foreground mb-4 text-sm">{project.description}</p>
+                    <div className="flex flex-wrap gap-2 mb-4">
                       {project.tech.map((tech) => (
-                        <span key={tech} className="px-3 py-1 text-sm rounded-full bg-accent text-accent-foreground">
+                        <span key={tech} className="px-2 py-1 text-xs rounded-full bg-accent text-accent-foreground">
                           {tech}
                         </span>
                       ))}
                     </div>
-                    <div className="flex gap-6">
-                      <a href={project.github} className="flex items-center gap-2 hover:text-purple-500 transition-colors">
-                        <Github className="w-5 h-5" />
+                    <div className="flex gap-4">
+                      <a href={project.github} className="flex items-center gap-2 hover:text-purple-500 transition-colors text-sm">
+                        <Github className="w-4 h-4" />
                         View Code
                       </a>
                       {project.demo && (
-                        <a href={project.demo} className="flex items-center gap-2 hover:text-purple-500 transition-colors">
-                          <ExternalLink className="w-5 h-5" />
+                        <a href={project.demo} className="flex items-center gap-2 hover:text-purple-500 transition-colors text-sm">
+                          <ExternalLink className="w-4 h-4" />
                           Live Demo
                         </a>
                       )}
                     </div>
-                    <button className="mt-7 text-purple-600 font-semibold underline" tabIndex={-1}>
-                      View More
-                    </button>
                   </div>
                 </div>
               )}
@@ -116,7 +111,6 @@ export function Projects() {
               >
                 <X className="w-6 h-6" />
               </button>
-              {/* Top 4:3 Image */}
               <img
                 src={projects[openIdx].images[0]}
                 alt="Project Main"

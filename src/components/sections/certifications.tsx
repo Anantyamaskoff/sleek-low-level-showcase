@@ -41,39 +41,33 @@ const certifications = [
 
 export function Certifications() {
   return (
-    <section id="certifications" className="py-16 px-4">
+    <section id="certifications" className="py-16 px-4 overflow-hidden">
       <div className="container mx-auto max-w-7xl">
         <h2 className="text-3xl font-bold text-center mb-8">
           Certifications &amp; Coursework
         </h2>
         <div className="w-full relative overflow-hidden">
           <div
-            className="flex flex-row gap-6 animate-scroll py-4"
+            className="flex flex-row gap-6 animate-scroll py-4 hover:pause"
             style={{
               whiteSpace: "nowrap",
               animationDuration: "30s",
               animationTimingFunction: "linear",
               animationIterationCount: "infinite",
               animationDirection: "normal",
-              animationFillMode: "none",
-              animationPlayState: "running",
-              "&:hover": {
-                animationPlayState: "paused"
-              }
             }}
           >
             {[...certifications, ...certifications].map((cert, idx) => (
               <div
                 key={cert.title + idx}
-                className="flex flex-col bg-card rounded-xl shadow-lg border border-accent w-[320px] aspect-[4/3] shrink-0 p-6"
+                className="flex flex-col bg-card rounded-xl shadow-md border border-accent w-[280px] aspect-[4/3] shrink-0 p-5"
               >
-                <h3 className="text-xl font-bold mb-2 text-center">{cert.title}</h3>
+                <h3 className="text-lg font-bold mb-auto text-center">{cert.title}</h3>
                 <div className="text-sm text-muted-foreground mb-1 text-center">{cert.issuer}</div>
                 <div className="text-sm text-muted-foreground text-center">{cert.date}</div>
-                <div className="flex-1" />
                 <a
                   href={cert.certificateUrl}
-                  className="flex items-center justify-center text-sm text-purple-500 hover:text-purple-600 font-medium mt-4"
+                  className="flex items-center justify-center text-sm text-purple-500 hover:text-purple-600 font-medium mt-3"
                   target="_blank"
                   rel="noopener"
                 >
