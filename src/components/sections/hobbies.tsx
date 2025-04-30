@@ -1,3 +1,4 @@
+
 import { useEffect, useRef } from "react";
 
 const hobbies = [{
@@ -42,84 +43,94 @@ const hobbies = [{
   level: "Intermediate"
 }];
 
-function useAutoScroll(isReverse: boolean, rowRef: React.RefObject<HTMLDivElement>, cardWidth = 166, speed = 0.08) {
+function useAutoScroll(speed = 0.5) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  
   useEffect(() => {
-    const container = rowRef.current;
+    const container = containerRef.current;
     if (!container) return;
-    let raf: number;
-    let running = true;
-    const maxScroll = container.scrollWidth - container.clientWidth;
-    const scrollStep = isReverse ? -speed : speed;
-    const handle = () => {
-      if (!running) {
-        raf = requestAnimationFrame(handle);
-        return;
+    
+    let scrollPosition = 0;
+    let animationFrameId: number;
+    let isHovering = false;
+    
+    const scroll = () => {
+      if (container && !isHovering) {
+        scrollPosition += speed;
+        
+        // When we've scrolled the width of the first duplicate set
+        if (scrollPosition >= container.scrollWidth / 2) {
+          scrollPosition = 0;
+        }
+        
+        container.scrollLeft = scrollPosition;
       }
-      container.scrollLeft += scrollStep;
-      if (!isReverse && container.scrollLeft >= maxScroll - 1) {
-        container.scrollLeft = 0;
-      }
-      if (isReverse && container.scrollLeft <= 0) {
-        container.scrollLeft = maxScroll;
-      }
-      raf = requestAnimationFrame(handle);
+      
+      animationFrameId = requestAnimationFrame(scroll);
     };
-    raf = requestAnimationFrame(handle);
-    const pause = () => {
-      running = false;
+    
+    const handleMouseEnter = () => {
+      isHovering = true;
     };
-    const resume = () => {
-      running = true;
+    
+    const handleMouseLeave = () => {
+      isHovering = false;
     };
-    container.addEventListener("mouseenter", pause);
-    container.addEventListener("mouseleave", resume);
+    
+    container.addEventListener('mouseenter', handleMouseEnter);
+    container.addEventListener('mouseleave', handleMouseLeave);
+    
+    animationFrameId = requestAnimationFrame(scroll);
+    
     return () => {
-      if (raf) cancelAnimationFrame(raf);
-      container.removeEventListener("mouseenter", pause);
-      container.removeEventListener("mouseleave", resume);
+      cancelAnimationFrame(animationFrameId);
+      container.removeEventListener('mouseenter', handleMouseEnter);
+      container.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, [isReverse, rowRef, speed]);
+  }, [speed]);
+  
+  return containerRef;
 }
 
 export function Hobbies() {
-  const upperRef = useRef<HTMLDivElement>(null);
-  const lowerRef = useRef<HTMLDivElement>(null);
-  useAutoScroll(false, upperRef, 180, 0.02);
-  useAutoScroll(true, lowerRef, 180, 0.02);
-  const hobbiesDoubled = [...hobbies, ...hobbies];
+  const scrollContainerRef = useAutoScroll(0.5);
+  
+  // Double the hobbies array to create seamless looping
+  const duplicatedHobbies = [...hobbies, ...hobbies];
   
   return (
     <section id="hobbies" className="py-12 px-4">
       <div className="container mx-auto max-w-7xl">
         <h2 className="text-3xl font-bold text-left mb-8">Hobbies & Interests</h2>
-        <div className="relative overflow-hidden">
-          <div className="space-y-4">
-            <div 
-              ref={lowerRef} 
-              className="flex flex-nowrap gap-4 overflow-hidden py-1" 
-              style={{
-                minHeight: "200px"
-              }}
-            >
-              {hobbiesDoubled.slice().reverse().map((hobby, index) => (
-                <div 
-                  key={`row2-${hobby.title}-${index}`} 
-                  className="hobby-card relative w-[240px] aspect-[4/3] flex-shrink-0 group border-2 border-accent hover:border-4 hover:border-accent transition-transform duration-300 ease-out hover:scale-105 hover:shadow-lg rounded-md"
-                >
-                  <img 
-                    src={hobby.image} 
-                    alt={hobby.title} 
-                    className="w-full h-full object-cover rounded-lg" 
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-2 rounded-lg">
-                    <span className="text-white font-medium text-sm">{hobby.title}</span>
-                    <span className="absolute bottom-2 right-2 text-xs px-2 py-0.5 bg-accent/50 text-white rounded-full">
-                      {hobby.level}
-                    </span>
-                  </div>
+        
+        <div className="overflow-hidden">
+          <div 
+            ref={scrollContainerRef}
+            className="flex gap-4 overflow-x-hidden"
+            style={{ minHeight: "200px" }}
+          >
+            {duplicatedHobbies.map((hobby, index) => (
+              <div 
+                key={`${hobby.title}-${index}`} 
+                className="hobby-card relative w-[240px] aspect-[4/3] flex-shrink-0 group border-2 border-accent hover:border-4 hover:border-accent transition-transform duration-300 ease-out hover:scale-105 hover:shadow-lg rounded-md opacity-0 scale-95 animate-fade-in-up"
+                style={{ 
+                  animationDelay: `${index * 100}ms`,
+                  animationFillMode: 'forwards'
+                }}
+              >
+                <img 
+                  src={hobby.image} 
+                  alt={hobby.title} 
+                  className="w-full h-full object-cover rounded-lg" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-2 rounded-lg">
+                  <span className="text-white font-medium text-sm">{hobby.title}</span>
+                  <span className="absolute bottom-2 right-2 text-xs px-2 py-0.5 bg-accent/50 text-white rounded-full">
+                    {hobby.level}
+                  </span>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
