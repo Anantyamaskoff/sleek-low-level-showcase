@@ -1,3 +1,4 @@
+
 import { Github, ExternalLink, X } from "lucide-react";
 import { useState, useEffect } from "react";
 
@@ -31,6 +32,16 @@ const projects = [
     demo: undefined,
     longDesc: "Developing a simple virtual machine architecture and a custom compiler for an educational language.",
     images: ["/placeholder.svg", "/src/images/infineon.jpg"]
+  },
+  {
+    title: "Embedded IoT System",
+    description: "Arduino-based IoT system for environmental monitoring with cloud connectivity.",
+    tech: ["C++", "Arduino", "MQTT", "IoT"],
+    image: "/placeholder.svg",
+    github: "#",
+    demo: "#",
+    longDesc: "Designed and implemented an embedded system that collects environmental data (temperature, humidity, air quality) and sends it to a cloud platform for monitoring and analysis.",
+    images: ["/placeholder.svg", "/src/images/starlab.jpg"]
   }
 ];
 
