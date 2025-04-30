@@ -4,28 +4,28 @@ import { Button } from "@/components/ui/button";
 
 const certifications = [
   {
-    title: "Advanced C Programming for Beginners",
+    title: "Advanced C Programming for Beginners with Extensive Practical Applications",
     issuer: "Programming Hub",
     date: "2024",
     logo: "/src/images/infineon.jpg",
     certificateUrl: "#",
   },
   {
-    title: "Operating Systems Architecture",
+    title: "Operating Systems Architecture and Design Principles",
     issuer: "University Course",
     date: "2023",
     logo: "/src/images/infineon.jpg",
     certificateUrl: "#",
   },
   {
-    title: "Computer Networks Fundamentals",
+    title: "Computer Networks Fundamentals and Advanced Protocols",
     issuer: "University Course",
     date: "2023",
     logo: "/src/images/infineon.jpg",
     certificateUrl: "#",
   },
   {
-    title: "RTOS and Real-Time Firmware",
+    title: "RTOS and Real-Time Firmware Development",
     issuer: "Embedded Systems Org",
     date: "2023",
     logo: "/src/images/starlab.jpg",
@@ -54,9 +54,9 @@ export function Certifications() {
             {[...certifications, ...certifications].map((cert, idx) => (
               <div
                 key={cert.title + idx}
-                className="group flex flex-col bg-card shadow-md border border-accent w-[280px] aspect-[4/3] shrink-0 p-4 justify-between px-0 py-[47px] mx-[20px] my-[5px] rounded-md transition-transform duration-300 ease-out hover:scale-105 hover:shadow-lg"
+                className="group flex flex-col bg-card shadow-md border border-accent w-[280px] aspect-[4/3] shrink-0 p-4 justify-between mx-[20px] my-[5px] rounded-md transition-transform duration-300 ease-out hover:scale-105 hover:shadow-lg"
               >
-                <h3 className="font-bold mb-auto px-4 break-words text-lg text-center">
+                <h3 className="font-bold mb-auto px-4 text-lg text-center break-words whitespace-normal overflow-hidden">
                   {cert.title}
                 </h3>
                 <div className="text-sm text-muted-foreground mb-1 text-center">
