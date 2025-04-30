@@ -54,7 +54,7 @@ export function Certifications() {
             {[...certifications, ...certifications].map((cert, idx) => (
               <div
                 key={cert.title + idx}
-                className="group flex flex-col bg-card shadow-md border-2 border-accent hover:border-4 hover:border-accent w-[280px] aspect-[1/2] shrink-0 p-4 justify-between mx-[20px] my-[5px] rounded-md transition-transform duration-300 ease-out hover:scale-105 hover:shadow-lg"
+                className="group flex flex-col bg-card shadow-md border-2 border-accent hover:border-4 hover:border-accent w-[280px] aspect-[4/3] shrink-0 p-4 justify-between mx-[20px] my-[5px] rounded-md transition-transform duration-300 ease-out hover:scale-105 hover:shadow-lg"
               >
                 <h3 className="font-bold mb-1 px-4 text-lg text-center break-words whitespace-normal overflow-hidden">
                   {cert.title}
