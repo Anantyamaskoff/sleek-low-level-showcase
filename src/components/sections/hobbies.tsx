@@ -1,3 +1,4 @@
+
 import { useEffect, useRef } from "react";
 const hobbies = [{
   title: "Photography",
@@ -71,8 +72,8 @@ function useAutoScroll(isReverse: boolean, rowRef: React.RefObject<HTMLDivElemen
 export function Hobbies() {
   const upperRef = useRef<HTMLDivElement>(null);
   const lowerRef = useRef<HTMLDivElement>(null);
-  useAutoScroll(false, upperRef, 180, 0.05);
-  useAutoScroll(true, lowerRef, 180, 0.05);
+  useAutoScroll(false, upperRef, 180, 0.02);
+  useAutoScroll(true, lowerRef, 180, 0.02);
   const hobbiesDoubled = [...hobbies, ...hobbies];
   return <section id="hobbies" className="py-12 px-4">
       <div className="container mx-auto max-w-7xl">
