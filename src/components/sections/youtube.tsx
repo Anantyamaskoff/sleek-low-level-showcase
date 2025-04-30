@@ -34,14 +34,15 @@ export function YoutubeSection() {
   return (
     <section id="youtube" className="py-20 px-4 bg-accent/30">
       <div className="container mx-auto max-w-6xl">
-        <div className="flex justify-between items-center mb-12">
+        <div className="flex justify-center items-center mb-12 gap-4">
           <h2 className="text-3xl font-bold">Latest Videos</h2>
           <a href="https://www.youtube.com/channel/" target="_blank" rel="noopener noreferrer">
             <Button 
-              className="bg-red-600 hover:bg-red-700 text-white"
+              variant="ghost"
+              size="icon"
+              className="bg-red-600 hover:bg-red-700 text-white p-2"
             >
-              <Youtube className="w-5 h-5 mr-2" />
-              YouTube Channel
+              <Youtube className="w-5 h-5" />
             </Button>
           </a>
         </div>
