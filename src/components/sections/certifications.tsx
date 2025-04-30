@@ -1,68 +1,86 @@
-
 import { ExternalLink } from "lucide-react";
 import { useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 
-const certifications = [{
-  title: "Advanced C Programming for Beginners",
-  issuer: "Programming Hub",
-  date: "2024",
-  logo: "/src/images/infineon.jpg",
-  certificateUrl: "#"
-}, {
-  title: "Operating Systems Architecture",
-  issuer: "University Course",
-  date: "2023",
-  logo: "/src/images/infineon.jpg",
-  certificateUrl: "#"
-}, {
-  title: "Computer Networks Fundamentals",
-  issuer: "University Course",
-  date: "2023",
-  logo: "/src/images/infineon.jpg",
-  certificateUrl: "#"
-}, {
-  title: "RTOS and Real-Time Firmware",
-  issuer: "Embedded Systems Org",
-  date: "2023",
-  logo: "/src/images/starlab.jpg",
-  certificateUrl: "#"
-}];
+const certifications = [
+  {
+    title: "Advanced C Programming for Beginners",
+    issuer: "Programming Hub",
+    date: "2024",
+    logo: "/src/images/infineon.jpg",
+    certificateUrl: "#",
+  },
+  {
+    title: "Operating Systems Architecture",
+    issuer: "University Course",
+    date: "2023",
+    logo: "/src/images/infineon.jpg",
+    certificateUrl: "#",
+  },
+  {
+    title: "Computer Networks Fundamentals",
+    issuer: "University Course",
+    date: "2023",
+    logo: "/src/images/infineon.jpg",
+    certificateUrl: "#",
+  },
+  {
+    title: "RTOS and Real-Time Firmware",
+    issuer: "Embedded Systems Org",
+    date: "2023",
+    logo: "/src/images/starlab.jpg",
+    certificateUrl: "#",
+  },
+];
 
 export function Certifications() {
-  return <section id="certifications" className="py-16 px-4 overflow-hidden">
+  return (
+    <section id="certifications" className="py-16 px-4 overflow-hidden">
       <div className="container mx-auto max-w-7xl">
         <h2 className="text-3xl font-bold text-center mb-8">
-          Certifications &amp; Coursework
+          Certifications & Coursework
         </h2>
         <div className="w-full relative overflow-hidden">
-          <div className="flex flex-row gap-6 animate-scroll py-4 hover:pause hover:pop" style={{
-          whiteSpace: "nowrap",
-          animationDuration: "30s",
-          animationTimingFunction: "linear",
-          animationIterationCount: "infinite",
-          animationDirection: "normal"
-        }}>
-            {[...certifications, ...certifications].map((cert, idx) => <div key={cert.title + idx} className="flex flex-col bg-card shadow-md border border-accent w-[280px] aspect-[4/3] shrink-0 p-4 justify-between px-0 py-[47px] mx-[20px] my-[5px] rounded-md">
-                <h3 className="font-bold mb-auto px-4 break-words line-clamp-2 text-lg text-center overflow-hidden">
+          <div
+            className="flex flex-row gap-6 animate-scroll py-4"
+            style={{
+              whiteSpace: "nowrap",
+              animationDuration: "30s",
+              animationTimingFunction: "linear",
+              animationIterationCount: "infinite",
+              animationDirection: "normal",
+            }}
+          >
+            {[...certifications, ...certifications].map((cert, idx) => (
+              <div
+                key={cert.title + idx}
+                className="group flex flex-col bg-card shadow-md border border-accent w-[280px] aspect-[4/3] shrink-0 p-4 justify-between px-0 py-[47px] mx-[20px] my-[5px] rounded-md transition-transform duration-300 ease-out hover:scale-105 hover:shadow-lg"
+              >
+                <h3 className="font-bold mb-auto px-4 break-words text-lg text-center">
                   {cert.title}
                 </h3>
-                <div className="text-sm text-muted-foreground mb-1 text-center">{cert.issuer}</div>
-                <div className="text-sm text-muted-foreground text-center">{cert.date}</div>
+                <div className="text-sm text-muted-foreground mb-1 text-center">
+                  {cert.issuer}
+                </div>
+                <div className="text-sm text-muted-foreground text-center">
+                  {cert.date}
+                </div>
                 <div className="flex justify-center mt-3">
-                  <a 
-                    href={cert.certificateUrl} 
-                    className="inline-flex items-center justify-center rounded-full px-4 py-1.5 text-sm font-medium text-purple-600 bg-purple-100 hover:bg-purple-200 transition-colors duration-200" 
-                    target="_blank" 
+                  <a
+                    href={cert.certificateUrl}
+                    className="inline-flex items-center justify-center rounded-full px-4 py-1.5 text-sm font-medium text-purple-600 bg-purple-100 hover:bg-purple-200 transition-colors duration-200"
+                    target="_blank"
                     rel="noopener"
                   >
                     <ExternalLink className="w-3.5 h-3.5 mr-1.5" />
                     View Credential
                   </a>
                 </div>
-              </div>)}
+              </div>
+            ))}
           </div>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 }
