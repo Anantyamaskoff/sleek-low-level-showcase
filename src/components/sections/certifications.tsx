@@ -27,12 +27,6 @@ const certifications = [{
   date: "2023",
   logo: "/src/images/starlab.jpg",
   certificateUrl: "#"
-}, {
-  title: "Digital Logic Design",
-  issuer: "YadaYada School",
-  date: "2022",
-  logo: "/src/images/infineon.jpg",
-  certificateUrl: "#"
 }];
 
 export function Certifications() {
@@ -42,7 +36,7 @@ export function Certifications() {
           Certifications &amp; Coursework
         </h2>
         <div className="w-full relative overflow-hidden">
-          <div className="flex flex-row gap-6 animate-scroll py-4 hover:pause" style={{
+          <div className="flex flex-row gap-6 animate-scroll py-4 hover:pause hover:pop" style={{
           whiteSpace: "nowrap",
           animationDuration: "30s",
           animationTimingFunction: "linear",
