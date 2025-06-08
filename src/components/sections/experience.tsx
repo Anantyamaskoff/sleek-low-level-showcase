@@ -11,7 +11,7 @@ const experiences = [
     logo: "/src/images/infineon.jpg",
     companyUrl: "https://www.infineon.com",
     details: [
-      "Selected as 1 of 25 for Infineon’s embedded systems program in Bangalore.",
+      "Selected as 1 of 25 for Infineon's embedded systems program in Bangalore.",
       "Hands-on experience with PSoC microcontrollers, bare-metal programming, linker scripts, Makefiles, UART/SPI/I2C comms.",
       "Key skills: firmware debugging, device drivers, ARM Cortex-M programming."
     ],
@@ -87,9 +87,6 @@ export function Experience() {
                     </div>
                   </div>
                   <p className="text-muted-foreground">{exp.description}</p>
-                  <button className="text-purple-600 font-semibold mt-3 underline" tabIndex={-1}>
-                    View More
-                  </button>
                 </div>
               )}
             </div>

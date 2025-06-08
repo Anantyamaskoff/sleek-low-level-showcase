@@ -1,5 +1,6 @@
+
 import { useState, useEffect } from "react";
-import { Linkedin, Github, FileText } from "lucide-react";
+import { Twitter, Github, FileText, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const roles = [
@@ -49,12 +50,26 @@ export function Hero() {
       <div className="container mx-auto max-w-6xl flex flex-col md:flex-row gap-8 md:gap-20 items-center md:items-start justify-center">
         <div className="flex-1 flex flex-col items-center md:items-end justify-center w-full max-w-sm md:max-w-none relative">
           <div className="relative mb-4 flex flex-col items-center w-full">
-            <img
-              src="/src/images/image.jpg"
-              alt="Profile"
-              className="w-40 h-40 md:w-44 md:h-44 object-cover rounded-full border-4 border-white dark:border-card shadow-xl bg-white"
-              style={{ marginBottom: "24px" }}
-            />
+            <div className="relative">
+              <img
+                src="/src/images/image.jpg"
+                alt="Profile"
+                className="w-40 h-40 md:w-44 md:h-44 object-cover rounded-full border-4 border-white dark:border-card shadow-xl bg-white"
+                style={{ marginBottom: "24px" }}
+              />
+              <div className="absolute -top-2 -right-2">
+                <Button
+                  asChild
+                  size="sm"
+                  className="bg-blue-500 hover:bg-blue-600 text-white rounded-full p-2 shadow-lg"
+                >
+                  <a href="mailto:your.email@example.com" className="flex items-center gap-1">
+                    <MessageCircle className="h-4 w-4" />
+                    <span className="text-xs whitespace-nowrap">send me a mail</span>
+                  </a>
+                </Button>
+              </div>
+            </div>
             <div className="w-[280px] md:w-[320px] bg-background/95 shadow-lg border rounded-2xl flex items-center px-4 py-2.5 gap-3 mb-3 hover:shadow-xl transition-shadow">
               <img
                 src="/src/images/infineon.jpg"
@@ -71,9 +86,9 @@ export function Hero() {
               </div>
             </div>
             <div className="flex flex-row gap-2 w-[280px] md:w-[320px] mx-auto justify-center">
-              <Button asChild variant="outline" size="sm" className="flex-1 min-w-0 bg-[#0077B5] hover:bg-[#0077B5]/90 text-white border-[#0077B5]">
-                <a href="https://linkedin.com" target="_blank" rel="noopener" className="flex items-center gap-1 px-0 w-full justify-center">
-                  <Linkedin className="h-4 w-4" /> LinkedIn
+              <Button asChild variant="outline" size="sm" className="flex-1 min-w-0 bg-black hover:bg-gray-800 text-white border-black">
+                <a href="https://twitter.com" target="_blank" rel="noopener" className="flex items-center gap-1 px-0 w-full justify-center">
+                  <Twitter className="h-4 w-4" /> Twitter
                 </a>
               </Button>
               <Button asChild variant="outline" size="sm" className="flex-1 min-w-0 bg-purple-500 hover:bg-purple-600 text-white border-purple-500[#2EA44F]">
@@ -91,7 +106,7 @@ export function Hero() {
         </div>
         <div className="flex-1 flex flex-col items-center md:items-start justify-center w-full mt-4 md:mt-16 min-w-0">
           <h1 className="text-3xl sm:text-4xl font-bold flex items-center gap-2 mb-5 whitespace-nowrap">
-            Hi, I’m yadayada{" "}
+            Hi, I'm yadayada{" "}
             <span
               className={`inline-block text-4xl origin-[70%_70%] transition-transform ${wiggle ? "rotate-[12deg]" : "-rotate-[8deg]"}`}
               aria-label="waving hand"
@@ -114,7 +129,7 @@ export function Hero() {
             </span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-lg mt-5 text-center md:text-left">
-            I’m passionate about building robust and efficient systems from the ground up, with deep expertise in embedded systems, firmware, and kernel programming.
+            I'm passionate about building robust and efficient systems from the ground up, with deep expertise in embedded systems, firmware, and kernel programming.
           </p>
         </div>
       </div>
