@@ -57,7 +57,7 @@ export function Hero() {
                 className="w-40 h-40 md:w-44 md:h-44 object-cover rounded-full border-4 border-white dark:border-card shadow-xl bg-white"
                 style={{ marginBottom: "24px" }}
               />
-              <div className="absolute -top-2 -right-2">
+              <div className="absolute -top-8 -right-8 md:-top-10 md:-right-10">
                 <Button
                   asChild
                   size="sm"
@@ -86,12 +86,12 @@ export function Hero() {
               </div>
             </div>
             <div className="flex flex-row gap-2 w-[280px] md:w-[320px] mx-auto justify-center">
-              <Button asChild variant="outline" size="sm" className="flex-1 min-w-0 bg-black hover:bg-gray-800 text-white border-black">
+              <Button asChild variant="outline" size="sm" className="flex-1 min-w-0 bg-blue-500 hover:bg-blue-600 text-white border-blue-500">
                 <a href="https://twitter.com" target="_blank" rel="noopener" className="flex items-center gap-1 px-0 w-full justify-center">
-                  <Twitter className="h-4 w-4" /> Twitter
+                  <Twitter className="h-4 w-4" /> X
                 </a>
               </Button>
-              <Button asChild variant="outline" size="sm" className="flex-1 min-w-0 bg-purple-500 hover:bg-purple-600 text-white border-purple-500[#2EA44F]">
+              <Button asChild variant="outline" size="sm" className="flex-1 min-w-0 bg-purple-500 hover:bg-purple-600 text-white border-purple-500">
                 <a href="/resume.pdf" target="_blank" rel="noopener" className="flex items-center gap-1 px-0 w-full justify-center">
                   <FileText className="h-4 w-4" /> Resume
                 </a>

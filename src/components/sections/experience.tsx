@@ -97,7 +97,7 @@ export function Experience() {
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 exp-modal-overlay"
             onClick={handleOverlayClick}
           >
-            <div className="relative bg-card w-[96vw] max-w-2xl rounded-xl shadow-xl flex flex-col animate-fade-in overflow-hidden">
+            <div className="relative bg-card w-[96vw] max-w-4xl rounded-xl shadow-xl flex flex-col animate-fade-in overflow-hidden">
               <button
                 className="absolute top-2 right-3 text-muted-foreground hover:text-foreground focus:outline-none z-20 flex items-center gap-1"
                 onClick={() => setOpenIdx(null)}
