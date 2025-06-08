@@ -57,14 +57,14 @@ export function Hero() {
                 className="w-40 h-40 md:w-44 md:h-44 object-cover rounded-full border-4 border-white dark:border-card shadow-xl bg-white"
                 style={{ marginBottom: "24px" }}
               />
-              <div className="absolute -top-8 -right-8 md:-top-10 md:-right-10">
+              <div className="absolute -top-4 -right-4 md:-top-6 md:-right-6">
                 <Button
                   asChild
                   size="sm"
-                  className="bg-blue-500 hover:bg-blue-600 text-white rounded-full p-2 shadow-lg"
+                  className="bg-blue-500 hover:bg-blue-600 text-white rounded-full p-1.5 shadow-lg text-xs"
                 >
                   <a href="mailto:your.email@example.com" className="flex items-center gap-1">
-                    <MessageCircle className="h-4 w-4" />
+                    <MessageCircle className="h-3 w-3" />
                     <span className="text-xs whitespace-nowrap">send me a mail</span>
                   </a>
                 </Button>
