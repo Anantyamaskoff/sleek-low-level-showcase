@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { Twitter, Github, FileText, MessageCircle } from "lucide-react";
+import { Twitter, Github, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const roles = [
@@ -57,18 +57,6 @@ export function Hero() {
                 className="w-40 h-40 md:w-44 md:h-44 object-cover rounded-full border-4 border-white dark:border-card shadow-xl bg-white"
                 style={{ marginBottom: "24px" }}
               />
-              <div className="absolute -top-4 -right-4 md:-top-6 md:-right-6">
-                <Button
-                  asChild
-                  size="sm"
-                  className="bg-blue-500 hover:bg-blue-600 text-white rounded-full p-1.5 shadow-lg text-xs"
-                >
-                  <a href="mailto:your.email@example.com" className="flex items-center gap-1">
-                    <MessageCircle className="h-3 w-3" />
-                    <span className="text-xs whitespace-nowrap">send me a mail</span>
-                  </a>
-                </Button>
-              </div>
             </div>
             <div className="w-[280px] md:w-[320px] bg-background/95 shadow-lg border rounded-2xl flex items-center px-4 py-2.5 gap-3 mb-3 hover:shadow-xl transition-shadow">
               <img
